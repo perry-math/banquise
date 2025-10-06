@@ -104,20 +104,41 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Lettres Antarctique " startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="D7784682-C2F4-4228-95F6-619DA473F64E" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*______________BODY______________*/	
+	<tw-storydata name="Lettres Antarctique " startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="D7784682-C2F4-4228-95F6-619DA473F64E" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*______________BODY______________*/
 
 	body {
       		margin: 0;
     		padding: 0;
     		display: flex;
     		justify-content: center;
-    		padding-top: 2rem; 
+    		padding-top: 2rem;
 		  	background-color: black;
       		color: #f5efff;
       		font-family: "Courier New", monospace;
       		font-weight: bold;
 
 		}
+
+	/* Correction des marges Twine pour centrer le contenu */
+	#story {
+		margin-left: auto !important;
+		margin-right: auto !important;
+		width: 100%;
+		max-width: 1200px;
+	}
+
+	#passages {
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.passage {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
 
 	body.boite #story {
     		margin: 0;
@@ -143,6 +164,26 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		    background-color: #ee6c4d;
          	transition-duration: 0.5s;
           	text-decoration: none;
+		}
+
+		/* Bouton pour changer d'image */
+		.change-btn {
+			background-color: #3d5a80;
+			border: none;
+			color: #e0fbfc;
+			padding: 15px 32px;
+			text-align: center;
+			display: inline-block;
+			font-size: 16px;
+			margin: 20px 2px;
+			border-radius: 50px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.change-btn:hover {
+			background-color: #ee6c4d;
+			transform: scale(1.05);
 		}
 
 /*______________PAGE START______________*/
@@ -391,34 +432,111 @@ body.vert {
 		}
 
 .player {
-  margin-top: 15px;
-  padding: 10px;
-  border: 2px solid #4CAF50;
-  border-radius: 12px;
-  display: inline-block;
-  text-align: center;
-  background: #f9f9f9;
+  margin: 30px auto;
+  padding: 40px;
+  max-width: 600px;
+  width: 90%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.player-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
 .audio_btn {
-  background-color: #4CAF50;
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
-  border: none;
-  padding: 8px 14px;
-  margin: 4px;
-  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 24px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1em;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .audio_btn:hover {
-  background-color: #45a049;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+}
+
+.audio_btn.play-pause {
+  width: 70px;
+  height: 70px;
+  font-size: 28px;
+}
+
+.progress-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 #progressBar {
   width: 100%;
-  margin-top: 10px;
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+#progressBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+#progressBar::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+#progressBar::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+#progressBar::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+.time-display {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 5px;
 }
 
 
@@ -712,23 +830,26 @@ en tout cas voici une petite abeille que normalement tu connais bien, je pense q
   UIBar.hide();
 &lt;&lt;/script&gt;&gt;
 
-Si tu as 10 min a perdre : 
+Si tu as 10 min a perdre :
 &lt;audio id=&quot;monPodcast&quot; src=&quot;son/podcast-manchot-and-shit.mp3&quot;&gt;&lt;/audio&gt;
 
 &lt;div class=&quot;player&quot;&gt;
   &lt;!-- Boutons principaux --&gt;
-  &lt;button class=&quot;audio_btn&quot; onclick=&quot;togglePlay()&quot;&gt;⏯️ Play/Pause&lt;/button&gt;
-  &lt;button class=&quot;audio_btn&quot; onclick=&quot;skip(-10)&quot;&gt;⏪ -10s&lt;/button&gt;
-  &lt;button class=&quot;audio_btn&quot; onclick=&quot;skip(10)&quot;&gt;⏩ +10s&lt;/button&gt;
-  &lt;button class=&quot;audio_btn&quot; onclick=&quot;changeSpeed()&quot;&gt;⚡ Vitesse&lt;/button&gt;
+  &lt;div class=&quot;player-controls&quot;&gt;
+    &lt;button class=&quot;audio_btn&quot; onclick=&quot;skip(-10)&quot;&gt;⏪&lt;/button&gt;
+    &lt;button class=&quot;audio_btn play-pause&quot; onclick=&quot;togglePlay()&quot;&gt;⏯️&lt;/button&gt;
+    &lt;button class=&quot;audio_btn&quot; onclick=&quot;skip(10)&quot;&gt;⏩&lt;/button&gt;
+    &lt;button class=&quot;audio_btn&quot; onclick=&quot;changeSpeed()&quot;&gt;⚡&lt;/button&gt;
+  &lt;/div&gt;
 
-  &lt;!-- Barre de progression --&gt;
-  &lt;input type=&quot;range&quot; id=&quot;progressBar&quot; value=&quot;0&quot; min=&quot;0&quot; max=&quot;100&quot; step=&quot;0.1&quot;
-         onchange=&quot;seekAudio(this.value)&quot; /&gt;
-
-  &lt;!-- Affichage temps --&gt;
-  &lt;div&gt;
-    &lt;span id=&quot;currentTime&quot;&gt;0:00&lt;/span&gt; / &lt;span id=&quot;duration&quot;&gt;0:00&lt;/span&gt;
+  &lt;!-- Barre de progression et temps --&gt;
+  &lt;div class=&quot;progress-container&quot;&gt;
+    &lt;input type=&quot;range&quot; id=&quot;progressBar&quot; value=&quot;0&quot; min=&quot;0&quot; max=&quot;100&quot; step=&quot;0.1&quot;
+           onchange=&quot;seekAudio(this.value)&quot; /&gt;
+    &lt;div class=&quot;time-display&quot;&gt;
+      &lt;span id=&quot;currentTime&quot;&gt;0:00&lt;/span&gt;
+      &lt;span id=&quot;duration&quot;&gt;0:00&lt;/span&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -759,7 +880,10 @@ Si tu as 10 min a perdre :
   function changeSpeed() {
     speedIndex = (speedIndex + 1) % speeds.length;
     audio.playbackRate = speeds[speedIndex];
-    alert(&quot;Vitesse : x&quot; + audio.playbackRate);
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = speeds[speedIndex] + &quot;x&quot;;
+    setTimeout(() =&gt; { btn.textContent = originalText; }, 1000);
   }
 
   // Barre de progression
@@ -800,7 +924,8 @@ guide de survie nul
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="14" name="Vert" tags="lettre vert" position="1200,425" size="100,100">&lt;&lt;set $fleurs = [
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="14" name="Vert" tags="lettre vert" position="1200,425" size="100,100">&lt;&lt;if not $fleurs&gt;&gt;
+&lt;&lt;set $fleurs = [
     {file: &quot;aloe&quot;, texte: &quot;L&#39;aloe Verra, la mienne est morte :(&quot;},
     {file: &quot;bambou&quot;, texte: &quot;Le bambou, c&#39;est super invasif ! Un enfer...&quot;},
     {file: &quot;bougainvillier&quot;, texte: &quot;Le bougainvillier, mdr y&#39;a ça dans les villages touristiques XD&quot;},
@@ -823,16 +948,55 @@ guide de survie nul
     {file: &quot;sapin&quot;, texte: &quot;Le sapin, j&#39;espère qu&#39;à Noël vous en aurez un, même en plastique.&quot;},
     {file: &quot;tournesol&quot;, texte: &quot;Le tournesol, lui au moins il voit le jour.&quot;}
 ]&gt;&gt;
-&lt;&lt;set _fleur = $fleurs.random()&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if not $fleursRestantes or $fleursRestantes.length === 0&gt;&gt;
+    &lt;&lt;set $fleursRestantes = $fleurs.slice()&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if not $currentFleur&gt;&gt;
+    &lt;&lt;set _index = random(0, $fleursRestantes.length - 1)&gt;&gt;
+    &lt;&lt;set $currentFleur = $fleursRestantes[_index]&gt;&gt;
+    &lt;&lt;set $fleursRestantes.deleteAt(_index)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;div id=&quot;main-container&quot;&gt;
     &lt;div id=&quot;texte-container&quot;&gt;
-        &lt;p&gt;Recharge la page, y&#39;en a plein d&#39;autres :)&lt;/p&gt;
-        &lt;p&gt;&lt;&lt;print _fleur.texte&gt;&gt;&lt;/p&gt;
+        &lt;p id=&quot;fleur-texte&quot;&gt;&lt;&lt;print $currentFleur.texte&gt;&gt;&lt;/p&gt;
     &lt;/div&gt;
     &lt;div id=&quot;fleur-container&quot;&gt;
-        &lt;&lt;print &#39;&lt;img src=&quot;img/fleurs/&#39; + _fleur.file + &#39;.png&quot; alt=&quot;&#39; + _fleur.file + &#39;&quot;&gt;&#39; &gt;&gt;
+        &lt;img id=&quot;fleur-img&quot; src=&quot;&quot; alt=&quot;fleur&quot;&gt;
     &lt;/div&gt;
+    &lt;button class=&quot;change-btn&quot; id=&quot;btn-fleur&quot;&gt;Voir une autre plante&lt;/button&gt;
 &lt;/div&gt;
+
+&lt;&lt;script&gt;&gt;
+  $(document).ready(function() {
+    function afficherFleur() {
+      const img = document.getElementById(&quot;fleur-img&quot;);
+      const texte = document.getElementById(&quot;fleur-texte&quot;);
+      const currentFleur = State.variables.currentFleur;
+      img.src = &quot;img/fleurs/&quot; + currentFleur.file + &quot;.png&quot;;
+      texte.textContent = currentFleur.texte;
+    }
+
+    afficherFleur();
+
+    document.getElementById(&quot;btn-fleur&quot;).addEventListener(&quot;click&quot;, function() {
+      const fleursData = State.variables.fleurs;
+      let fleursRestantes = State.variables.fleursRestantes;
+
+      if (fleursRestantes.length === 0) {
+        fleursRestantes = fleursData.slice();
+        State.variables.fleursRestantes = fleursRestantes;
+      }
+
+      const index = random(0, fleursRestantes.length - 1);
+      State.variables.currentFleur = fleursRestantes[index];
+      fleursRestantes.splice(index, 1);
+      State.variables.fleursRestantes = fleursRestantes;
+
+      afficherFleur();
+    });
+  });
+&lt;&lt;/script&gt;&gt;
 &lt;div class=&quot;retour_bouton&quot;&gt;
     [[Retour |boite aux lettres]]
 &lt;/div&gt;
@@ -908,26 +1072,66 @@ gif feu de camps
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="Tête" tags="lettre tete" position="1200,475" size="100,100">&lt;&lt;set $tetes = [
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="Tête" tags="lettre tete" position="1200,475" size="100,100">&lt;&lt;if not $tetes&gt;&gt;
+&lt;&lt;set $tetes = [
     {file: &quot;perry&quot;, texte: &quot;Sache que ce n&#39;est pas moi qui ai choisi la photo… et je me suis retenu de la regarder… J&#39;ai peur de ce que Manon a choisi pour moi…&quot;},
-    {file: &quot;pa&quot;, texte: &quot;Quel bel homme… Dommage qu’on ne voie pas très bien à cause du sac de patates sur son épaule (loin de moi l’idée de vouloir faire une blague limite à ce sujet).&quot;},
-    {file: &quot;eloi&quot;, texte: &quot;Je crois qu’il a lâché un pet sur celle-ci…&quot;},
-    {file: &quot;jana&quot;, texte: &quot;Alalala, ça c’est une tête qu’on n’oublie pas.&quot;},
-    {file: &quot;amour&quot;, texte: &quot;Petit cachottier, je n’étais pas au courant que tu en pinçais pour lui ;)&quot;},
-    {file: &quot;eloi_exclu&quot;, texte: &quot;Qui ne voudrait pas d’une nuit avec cet Apollon ?&quot;},
+    {file: &quot;pa&quot;, texte: &quot;Quel bel homme… Dommage qu'on ne voie pas très bien à cause du sac de patates sur son épaule (loin de moi l'idée de vouloir faire une blague limite à ce sujet).&quot;},
+    {file: &quot;eloi&quot;, texte: &quot;Je crois qu'il a lâché un pet sur celle-ci…&quot;},
+    {file: &quot;jana&quot;, texte: &quot;Alalala, ça c'est une tête qu'on n'oublie pas.&quot;},
+    {file: &quot;amour&quot;, texte: &quot;Petit cachottier, je n'étais pas au courant que tu en pinçais pour lui ;)&quot;},
+    {file: &quot;eloi_exclu&quot;, texte: &quot;Qui ne voudrait pas d'une nuit avec cet Apollon ?&quot;},
     {file: &quot;perry_exclu&quot;, texte: &quot;Parce que je sais que mon corps de rêve te manque &lt;3&quot;},
-    {file: &quot;toi&quot;, texte: &quot;Au cas où tu n’aurais pas de miroir, voici à quoi tu ressembles (ou ressemblais). Aujourd’hui, je t’imagine plutôt avec un look à la Robinson Crusoé.&quot;}
+    {file: &quot;toi&quot;, texte: &quot;Au cas où tu n'aurais pas de miroir, voici à quoi tu ressembles (ou ressemblais). Aujourd'hui, je t'imagine plutôt avec un look à la Robinson Crusoé.&quot;}
 ]&gt;&gt;
-&lt;&lt;set _tete = $tetes.random()&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if not $tetesRestantes or $tetesRestantes.length === 0&gt;&gt;
+    &lt;&lt;set $tetesRestantes = $tetes.slice()&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if not $currentTete&gt;&gt;
+    &lt;&lt;set _index = random(0, $tetesRestantes.length - 1)&gt;&gt;
+    &lt;&lt;set $currentTete = $tetesRestantes[_index]&gt;&gt;
+    &lt;&lt;set $tetesRestantes.deleteAt(_index)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;div id=&quot;main-container-tete&quot;&gt;
     &lt;div id=&quot;texte-container-tete&quot;&gt;
-        &lt;p&gt;Recharge la page, y&#39;en a plein d&#39;autres :)&lt;/p&gt;
-        &lt;p&gt;&lt;&lt;print _tete.texte&gt;&gt;&lt;/p&gt;
+        &lt;p id=&quot;tete-texte&quot;&gt;&lt;&lt;print $currentTete.texte&gt;&gt;&lt;/p&gt;
     &lt;/div&gt;
     &lt;div id=&quot;tete-container&quot;&gt;
-        &lt;&lt;print &#39;&lt;img src=&quot;img/tetes/&#39; + _tete.file + &#39;.png&quot; alt=&quot;&#39; + _tete.file + &#39;&quot;&gt;&#39; &gt;&gt;
+        &lt;img id=&quot;tete-img&quot; src=&quot;&quot; alt=&quot;tete&quot;&gt;
     &lt;/div&gt;
+    &lt;button class=&quot;change-btn&quot; id=&quot;btn-tete&quot;&gt;Voir une autre tête&lt;/button&gt;
 &lt;/div&gt;
+
+&lt;&lt;script&gt;&gt;
+  $(document).ready(function() {
+    function afficherTete() {
+      const img = document.getElementById(&quot;tete-img&quot;);
+      const texte = document.getElementById(&quot;tete-texte&quot;);
+      const currentTete = State.variables.currentTete;
+      img.src = &quot;img/tetes/&quot; + currentTete.file + &quot;.png&quot;;
+      texte.textContent = currentTete.texte;
+    }
+
+    afficherTete();
+
+    document.getElementById(&quot;btn-tete&quot;).addEventListener(&quot;click&quot;, function() {
+      const tetesData = State.variables.tetes;
+      let tetesRestantes = State.variables.tetesRestantes;
+
+      if (tetesRestantes.length === 0) {
+        tetesRestantes = tetesData.slice();
+        State.variables.tetesRestantes = tetesRestantes;
+      }
+
+      const index = random(0, tetesRestantes.length - 1);
+      State.variables.currentTete = tetesRestantes[index];
+      tetesRestantes.splice(index, 1);
+      State.variables.tetesRestantes = tetesRestantes;
+
+      afficherTete();
+    });
+  });
+&lt;&lt;/script&gt;&gt;
 &lt;div class=&quot;retour_bouton&quot;&gt;
     [[Retour |boite aux lettres]]
 &lt;/div&gt;
