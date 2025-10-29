@@ -1,0 +1,13 @@
+
+    // Ajouter la classe 'coming-soon' aux boutons des passages correspondants
+    $('.lettre_bouton').each(function() {
+      var link = $(this).find('a');
+      var passageName = link.text().trim();
+      var passage = $('tw-passagedata[name="' + passageName + '"]');
+      if (passage.length > 0) {
+        var tags = passage.attr('tags');
+        if (tags && tags.includes('coming-soon')) {
+          $(this).addClass('coming-soon');
+        }
+      }
+    });

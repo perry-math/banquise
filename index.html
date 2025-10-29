@@ -617,7 +617,7 @@ body.vert {
 	body.debut {
     		
 		}</style><script role="script" id="twine-user-script" type="text/twine-javascript">
-</script><tw-tag name="boite" color="red"></tw-tag><tw-tag name="start" color="orange"></tw-tag><tw-tag name="lettre" color="yellow"></tw-tag><tw-tag name="manchot" color="purple"></tw-tag><tw-tag name="tête" color="purple"></tw-tag><tw-tag name="dispute" color="purple"></tw-tag><tw-tag name="smack" color="purple"></tw-tag><tw-tag name="nian" color="purple"></tw-tag><tw-tag name="froid" color="purple"></tw-tag><tw-tag name="pâques" color="purple"></tw-tag><tw-tag name="bonus" color="purple"></tw-tag><tw-tag name="anniv" color="purple"></tw-tag><tw-tag name="noel" color="purple"></tw-tag><tw-tag name="halloween" color="purple"></tw-tag><tw-tag name="st" color="purple"></tw-tag><tw-tag name="vert" color="purple"></tw-tag><tw-tag name="ennui" color="purple"></tw-tag><tw-tag name="tempete" color="purple"></tw-tag><tw-tag name="amis" color="purple"></tw-tag><tw-tag name="artifice" color="purple"></tw-tag><tw-tag name="solitude" color="purple"></tw-tag><tw-tag name="cuddle" color="purple"></tw-tag><tw-tag name="bravo" color="purple"></tw-tag><tw-tag name="aurore" color="purple"></tw-tag><tw-tag name="fin" color="purple"></tw-tag><tw-tag name="blague" color="purple"></tw-tag><tw-tag name="début" color="purple"></tw-tag><tw-tag name="tete" color="purple"></tw-tag><tw-tag name="paques" color="purple"></tw-tag><tw-tag name="debut" color="purple"></tw-tag><tw-passagedata pid="1" name="Start" tags="start" position="700,100" size="100,100">/* ------------------ SETTING ------------------- */
+</script><tw-tag name="boite" color="blue"></tw-tag><tw-tag name="start" color="orange"></tw-tag><tw-tag name="lettre" color="yellow"></tw-tag><tw-tag name="manchot" color="purple"></tw-tag><tw-tag name="tête" color="purple"></tw-tag><tw-tag name="dispute" color="purple"></tw-tag><tw-tag name="smack" color="purple"></tw-tag><tw-tag name="nian" color="purple"></tw-tag><tw-tag name="froid" color="purple"></tw-tag><tw-tag name="pâques" color="purple"></tw-tag><tw-tag name="bonus" color="purple"></tw-tag><tw-tag name="anniv" color="purple"></tw-tag><tw-tag name="noel" color="purple"></tw-tag><tw-tag name="halloween" color="purple"></tw-tag><tw-tag name="st" color="purple"></tw-tag><tw-tag name="vert" color="purple"></tw-tag><tw-tag name="ennui" color="purple"></tw-tag><tw-tag name="tempete" color="purple"></tw-tag><tw-tag name="amis" color="purple"></tw-tag><tw-tag name="artifice" color="purple"></tw-tag><tw-tag name="solitude" color="purple"></tw-tag><tw-tag name="cuddle" color="purple"></tw-tag><tw-tag name="bravo" color="purple"></tw-tag><tw-tag name="aurore" color="purple"></tw-tag><tw-tag name="fin" color="purple"></tw-tag><tw-tag name="blague" color="purple"></tw-tag><tw-tag name="début" color="purple"></tw-tag><tw-tag name="tete" color="purple"></tw-tag><tw-tag name="paques" color="purple"></tw-tag><tw-tag name="debut" color="purple"></tw-tag><tw-tag name="coming-soon" color="red"></tw-tag><tw-tag name="fini" color="green"></tw-tag><tw-passagedata pid="1" name="Start" tags="start" position="700,100" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -677,19 +677,18 @@ body.vert {
     width: 100% !important;
     box-sizing: border-box !important;
   }
+
+  /* Styles pour les lettres finies */
+  .lettre_bouton.fini a {
+    background-image: url(&#39;img/lettre.png&#39;) !important;
+  }
+
+  /* Styles pour les lettres à venir */
+  .lettre_bouton.coming-soon a {
+    background-image: url(&#39;img/lettre_soon.png&#39;) !important;
+  }
 &lt;/style&gt;
 
-&lt;script&gt;
-  // Forcer la suppression des marges au chargement
-  $(document).ready(function() {
-    $('#story').css({
-      'margin-left': '0',
-      'margin-right': '0',
-      'left': '0',
-      'right': '0'
-    });
-  });
-&lt;/script&gt;
 
 &lt;div class=&quot;letter-grid&quot;&gt;
     &lt;div class=&quot;letter-item&quot;&gt;
@@ -792,7 +791,61 @@ body.vert {
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |Start]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="Halloween" tags="lettre halloween" position="600,450" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;
+
+&lt;&lt;script&gt;&gt;
+  // Forcer la suppression des marges
+  $(&#39;#story&#39;).css({
+    &#39;margin-left&#39;: &#39;0&#39;,
+    &#39;margin-right&#39;: &#39;0&#39;,
+    &#39;left&#39;: &#39;0&#39;,
+    &#39;right&#39;: &#39;0&#39;
+  });
+
+  // Appliquer les classes selon les balises des passages
+  $(document).on(&#39;:passagerender&#39;, function() {
+    $(&#39;.lettre_bouton&#39;).each(function() {
+      var link = $(this).find(&#39;a&#39;);
+      if (link.length &gt; 0) {
+        var passageName = link.text().trim();
+        try {
+          var passage = Story.get(passageName);
+          if (passage &amp;&amp; passage.tags) {
+            if (passage.tags.includes(&#39;fini&#39;)) {
+              $(this).addClass(&#39;fini&#39;);
+            } else if (passage.tags.includes(&#39;coming-soon&#39;)) {
+              $(this).addClass(&#39;coming-soon&#39;);
+            }
+          }
+        } catch(e) {
+          // Ignorer les erreurs
+        }
+      }
+    });
+  });
+
+  // Exécuter immédiatement pour la première fois
+  setTimeout(function() {
+    $(&#39;.lettre_bouton&#39;).each(function() {
+      var link = $(this).find(&#39;a&#39;);
+      if (link.length &gt; 0) {
+        var passageName = link.text().trim();
+        try {
+          var passage = Story.get(passageName);
+          if (passage &amp;&amp; passage.tags) {
+            if (passage.tags.includes(&#39;fini&#39;)) {
+              $(this).addClass(&#39;fini&#39;);
+            } else if (passage.tags.includes(&#39;coming-soon&#39;)) {
+              $(this).addClass(&#39;coming-soon&#39;);
+            }
+          }
+        } catch(e) {
+          // Ignorer les erreurs
+        }
+      }
+    });
+  }, 100);
+&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="Halloween" tags="lettre halloween coming-soon" position="600,450" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -801,7 +854,7 @@ body.vert {
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="4" name="Noël" tags="lettre noel" position="500,500" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="4" name="Noël" tags="lettre noel coming-soon" position="500,500" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -810,7 +863,7 @@ body.vert {
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="5" name="Anniversaire" tags="lettre anniv" position="800,575" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="5" name="Anniversaire" tags="lettre anniv coming-soon" position="800,575" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -822,7 +875,7 @@ carte anniverssaire nul qui fait du bruit
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="6" name="Pâques" tags="lettre paques" position="800,525" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="6" name="Pâques" tags="lettre paques coming-soon" position="800,525" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -833,7 +886,7 @@ ou est charlie mais on cache sa gueule
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="St Valentin" tags="lettre st" position="500,450" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="St Valentin" tags="lettre st coming-soon" position="500,450" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -842,7 +895,7 @@ ou est charlie mais on cache sa gueule
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="8" name="Amis" tags="lettre amis" position="600,475" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="8" name="Amis" tags="lettre amis coming-soon" position="600,475" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -851,7 +904,7 @@ ou est charlie mais on cache sa gueule
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="Artifice" tags="lettre artifice" position="800,500" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="Artifice" tags="lettre artifice coming-soon" position="800,500" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -862,7 +915,7 @@ clic = artifice + bruit prout (parfois)
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="10" name="Solitude" tags="lettre solitude" position="800,550" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="10" name="Solitude" tags="lettre solitude coming-soon" position="800,550" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -876,7 +929,7 @@ au pire envoie un message frerot ! et oublie je veux que tu m&#39;envoie une let
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="11" name="Cuddle" tags="lettre cuddle" position="1000,400" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="11" name="Cuddle" tags="lettre cuddle coming-soon" position="1000,400" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -892,7 +945,7 @@ en tout cas voici une petite abeille que normalement tu connais bien, je pense q
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="12" name="Ennui" tags="lettre ennui" position="1000,425" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="12" name="Ennui" tags="lettre ennui coming-soon" position="1000,425" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -981,7 +1034,7 @@ Si tu as 10 min a perdre :
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="13" name="Tempête" tags="lettre tempete" position="800,450" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="13" name="Tempête" tags="lettre tempete coming-soon" position="800,450" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -993,7 +1046,7 @@ guide de survie nul
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="14" name="Vert" tags="lettre vert" position="1200,425" size="100,100">&lt;&lt;if not $fleurs&gt;&gt;
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="14" name="Vert" tags="lettre vert fini" position="1200,425" size="100,100">&lt;&lt;if not $fleurs&gt;&gt;
 &lt;&lt;set $fleurs = [
     {file: &quot;aloe&quot;, texte: &quot;L&#39;aloe Verra, la mienne est morte :(&quot;},
     {file: &quot;bambou&quot;, texte: &quot;Le bambou, c&#39;est super invasif ! Un enfer...&quot;},
@@ -1073,7 +1126,7 @@ guide de survie nul
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
   UIBar.hide();
-&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="Blague" tags="lettre blague" position="800,425" size="100,100">/* ------------------ SETTING ------------------- */
+&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="Blague" tags="lettre blague coming-soon" position="800,425" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1082,7 +1135,7 @@ guide de survie nul
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="16" name="Début" tags="lettre debut" position="600,525" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="16" name="Début" tags="lettre debut coming-soon" position="600,525" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1092,7 +1145,7 @@ guide de survie nul
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
     &lt;/div&gt;
-    </tw-passagedata><tw-passagedata pid="17" name="Fin" tags="lettre fin" position="500,525" size="100,100">/* ------------------ SETTING ------------------- */
+    </tw-passagedata><tw-passagedata pid="17" name="Fin" tags="lettre fin coming-soon" position="500,525" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1101,7 +1154,7 @@ guide de survie nul
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="18" name="Bravo" tags="lettre bravo" position="600,500" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="18" name="Bravo" tags="lettre bravo coming-soon" position="600,500" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1110,7 +1163,7 @@ guide de survie nul
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="19" name="Aurore" tags="lettre aurore" position="1200,400" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="19" name="Aurore" tags="lettre aurore fini" position="1200,400" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1119,7 +1172,7 @@ guide de survie nul
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="20" name="Dispute" tags="lettre dispute" position="800,400" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="20" name="Dispute" tags="lettre dispute coming-soon" position="800,400" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1130,7 +1183,7 @@ comment enterer un corps en antactique
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="21" name="Froid" tags="lettre froid" position="800,475" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="21" name="Froid" tags="lettre froid coming-soon" position="800,475" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1141,16 +1194,16 @@ gif feu de camps
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="Tête" tags="lettre tete" position="1200,475" size="100,100">&lt;&lt;if not $tetes&gt;&gt;
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="Tête" tags="lettre tete fini" position="1200,475" size="100,100">&lt;&lt;if not $tetes&gt;&gt;
 &lt;&lt;set $tetes = [
     {file: &quot;perry&quot;, texte: &quot;Sache que ce n&#39;est pas moi qui ai choisi la photo… et je me suis retenu de la regarder… J&#39;ai peur de ce que Manon a choisi pour moi…&quot;},
-    {file: &quot;pa&quot;, texte: &quot;Quel bel homme… Dommage qu'on ne voie pas très bien à cause du sac de patates sur son épaule (loin de moi l'idée de vouloir faire une blague limite à ce sujet).&quot;},
-    {file: &quot;eloi&quot;, texte: &quot;Je crois qu'il a lâché un pet sur celle-ci…&quot;},
-    {file: &quot;jana&quot;, texte: &quot;Alalala, ça c'est une tête qu'on n'oublie pas.&quot;},
-    {file: &quot;amour&quot;, texte: &quot;Petit cachottier, je n'étais pas au courant que tu en pinçais pour lui ;)&quot;},
-    {file: &quot;eloi_exclu&quot;, texte: &quot;Qui ne voudrait pas d'une nuit avec cet Apollon ?&quot;},
+    {file: &quot;pa&quot;, texte: &quot;Quel bel homme… Dommage qu&#39;on ne voie pas très bien à cause du sac de patates sur son épaule (loin de moi l&#39;idée de vouloir faire une blague limite à ce sujet).&quot;},
+    {file: &quot;eloi&quot;, texte: &quot;Je crois qu&#39;il a lâché un pet sur celle-ci…&quot;},
+    {file: &quot;jana&quot;, texte: &quot;Alalala, ça c&#39;est une tête qu&#39;on n&#39;oublie pas.&quot;},
+    {file: &quot;amour&quot;, texte: &quot;Petit cachottier, je n&#39;étais pas au courant que tu en pinçais pour lui ;)&quot;},
+    {file: &quot;eloi_exclu&quot;, texte: &quot;Qui ne voudrait pas d&#39;une nuit avec cet Apollon ?&quot;},
     {file: &quot;perry_exclu&quot;, texte: &quot;Parce que je sais que mon corps de rêve te manque &lt;3&quot;},
-    {file: &quot;toi&quot;, texte: &quot;Au cas où tu n'aurais pas de miroir, voici à quoi tu ressembles (ou ressemblais). Aujourd'hui, je t'imagine plutôt avec un look à la Robinson Crusoé.&quot;}
+    {file: &quot;toi&quot;, texte: &quot;Au cas où tu n&#39;aurais pas de miroir, voici à quoi tu ressembles (ou ressemblais). Aujourd&#39;hui, je t&#39;imagine plutôt avec un look à la Robinson Crusoé.&quot;}
 ]&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;if not $tetesRestantes or $tetesRestantes.length === 0&gt;&gt;
@@ -1208,7 +1261,7 @@ gif feu de camps
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
   UIBar.hide();
-&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="Manchot" tags="lettre manchot" position="1200,450" size="100,100">/* ------------------ SETTING ------------------- */
+&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="Manchot" tags="lettre manchot fini" position="1200,450" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1223,7 +1276,7 @@ gif feu de camps
         onclick=&quot;window.open(&#39;doc/certificat.pdf&#39;, &#39;_blank&#39;);&quot;&gt;
   Ouvrir le certificat d&#39;adoption
 &lt;/button&gt;
-</tw-passagedata><tw-passagedata pid="24" name="Nian Nian" tags="lettre nian" position="800,600" size="100,100">/* ------------------ SETTING ------------------- */
+</tw-passagedata><tw-passagedata pid="24" name="Nian Nian" tags="lettre nian coming-soon" position="800,600" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1237,7 +1290,7 @@ il me manque, bon souvenir
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="25" name="Smack" tags="lettre smack" position="1000,450" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="25" name="Smack" tags="lettre smack coming-soon" position="1000,450" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
@@ -1255,7 +1308,7 @@ et si c&#39;est mathilde, tu as vraiment un proble avec ce prenom et je crois qu
 
 &lt;div class=&quot;retour_bouton&quot;&gt;
         [[Retour |boite aux lettres]]
-    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="26" name="Bonus" tags="lettre bonus" position="500,475" size="100,100">/* ------------------ SETTING ------------------- */
+    &lt;/div&gt;</tw-passagedata><tw-passagedata pid="26" name="Bonus" tags="lettre bonus coming-soon" position="500,475" size="100,100">/* ------------------ SETTING ------------------- */
 
 /*hide UI Bar*/
 &lt;&lt;script&gt;&gt;
