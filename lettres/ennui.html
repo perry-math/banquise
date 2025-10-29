@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ennui - Lettres Antarctique</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .player {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #222;
+            border-radius: 10px;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .audio_btn {
+            background-color: #444;
+            color: #f5efff;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .audio_btn:hover {
+            background-color: #666;
+        }
+
+        .progress-container {
+            margin-top: 1rem;
+        }
+
+        #progressBar {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #444;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #progressBar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #f5efff;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        #progressBar::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #f5efff;
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="letter-content">
+        <h1>Ennui</h1>
+
+        <p>Si tu as 10 min à perdre :</p>
+
+        <audio id="monPodcast" src="../son/podcast-manchot-and-shit.mp3"></audio>
+
+        <div class="player">
+            <!-- Boutons principaux -->
+            <div class="player-controls">
+                <button class="audio_btn" onclick="skip(-10)">⏪</button>
+                <button class="audio_btn play-pause" onclick="togglePlay()">⏯️</button>
+                <button class="audio_btn" onclick="skip(10)">⏩</button>
+                <button class="audio_btn" onclick="changeSpeed()">⚡</button>
+            </div>
+
+            <!-- Barre de progression et temps -->
+            <div class="progress-container">
+                <input type="range" id="progressBar" value="0" min="0" max="100" step="0.1"
+                       onchange="seekAudio(this.value)" />
+                <div class="time-display">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="retour_bouton">
+            <a href="../boite-aux-lettres.html">Retour</a>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById("monPodcast");
+        const progressBar = document.getElementById("progressBar");
+        const currentTimeEl = document.getElementById("currentTime");
+        const durationEl = document.getElementById("duration");
+        let speeds = [1, 1.25, 1.5, 2];
+        let speedIndex = 0;
+
+        // Lecture / Pause
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+
+        // Avancer/Reculer
+        function skip(seconds) {
+            audio.currentTime += seconds;
+        }
+
+        // Changer vitesse
+        function changeSpeed() {
+            speedIndex = (speedIndex + 1) % speeds.length;
+            audio.playbackRate = speeds[speedIndex];
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = speeds[speedIndex] + "x";
+            setTimeout(() => { btn.textContent = originalText; }, 1000);
+        }
+
+        // Barre de progression
+        audio.addEventListener("timeupdate", () => {
+            progressBar.value = (audio.currentTime / audio.duration) * 100;
+
+            // Format minutes:secondes
+            const curM = Math.floor(audio.currentTime / 60);
+            const curS = Math.floor(audio.currentTime % 60).toString().padStart(2, '0');
+            const durM = Math.floor(audio.duration / 60);
+            const durS = Math.floor(audio.duration % 60).toString().padStart(2, '0');
+
+            currentTimeEl.textContent = `${curM}:${curS}`;
+            durationEl.textContent = `${durM}:${durS}`;
+        });
+
+        // Seek (quand on bouge la barre)
+        function seekAudio(value) {
+            audio.currentTime = (value / 100) * audio.duration;
+        }
+    </script>
+</body>
+</html>

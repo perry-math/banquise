@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vert - Lettres Antarctique</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="gallery-page page-vert">
+    <div class="letter-content">
+        <h1>En manque de verdure ?</h1>
+
+        <div class="image-gallery">
+            <div id="fleur-container">
+                <img class="gallery-image" id="fleur-img" src="" alt="fleur">
+            </div>
+            <div id="texte-container">
+                <p class="gallery-text" id="fleur-texte"></p>
+                <button class="gallery-button" id="btn-fleur">Voir une autre plante</button>
+            </div>
+        </div>
+
+        <div class="retour_bouton">
+            <a href="../boite-aux-lettres.html">Retour</a>
+        </div>
+    </div>
+
+    <script>
+        // Liste des fleurs
+        const fleurs = [
+            {file: "aloe", texte: "L'aloe Verra, la mienne est morte :("},
+            {file: "bambou", texte: "Le bambou, c'est super invasif ! Un enfer..."},
+            {file: "bougainvillier", texte: "Le bougainvillier, mdr y'a ça dans les villages touristiques XD"},
+            {file: "cactus", texte: "Le cactus, tu risques pas d'en voir en Antarctique"},
+            {file: "chene", texte: "Le chêne, ça te rappelle chez toi ?"},
+            {file: "coquelicot", texte: "Le coquelicot, on peut faire des maracas quand c'est plein de graines, c'est marrant."},
+            {file: "erable", texte: "L'érable du Japon, je préfère le sirop d'érable canadien."},
+            {file: "fougere", texte: "Les fougères... c'est juste une fougère."},
+            {file: "hibiscus", texte: "L'hibiscus, sache que la fleur confite est super bonne."},
+            {file: "iris", texte: "L'iris, on dirait un peu des aliens nan ?"},
+            {file: "lavande", texte: "La lavande, tu te rappelles de l'odeur ? Perso je n'y arrive pas."},
+            {file: "lys", texte: "Le lys, c'est vraiment trop beau !!!!"},
+            {file: "marguerite", texte: "La marguerite, ma petite préférée :)"},
+            {file: "oiseau", texte: "L'oiseau de paradis, perso je ne vois pas l'oiseau."},
+            {file: "orchidee", texte: "L'orchidée, rien à dire de plus."},
+            {file: "palmier", texte: "Le palmier, bahaha ça n'existe pas ici..."},
+            {file: "passiflore", texte: "La passiflore, je viens d'apprendre que c'était la fleur du fruit de la passion, stylé."},
+            {file: "pivoine", texte: "La pivoine, bof, c'est une fleur de grand-mère."},
+            {file: "rose", texte: "La rose, classique."},
+            {file: "sapin", texte: "Le sapin, j'espère qu'à Noël vous en aurez un, même en plastique."},
+            {file: "tournesol", texte: "Le tournesol, lui au moins il voit le jour."}
+        ];
+
+        let fleursRestantes = [...fleurs];
+        let currentFleur = null;
+
+        function afficherFleur() {
+            const img = document.getElementById("fleur-img");
+            const texte = document.getElementById("fleur-texte");
+
+            // Fade out
+            img.classList.add('fade-out');
+
+            setTimeout(() => {
+                img.src = "../img/fleurs/" + currentFleur.file + ".png";
+                texte.textContent = currentFleur.texte;
+                // Fade in
+                img.classList.remove('fade-out');
+            }, 300);
+        }
+
+        function changerFleur() {
+            if (fleursRestantes.length === 0) {
+                fleursRestantes = [...fleurs];
+            }
+            const index = Math.floor(Math.random() * fleursRestantes.length);
+            currentFleur = fleursRestantes[index];
+            fleursRestantes.splice(index, 1);
+            afficherFleur();
+        }
+
+        // Afficher une fleur au chargement
+        changerFleur();
+
+        // Bouton pour changer de fleur
+        document.getElementById("btn-fleur").addEventListener("click", changerFleur);
+    </script>
+</body>
+</html>

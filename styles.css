@@ -1,0 +1,373 @@
+/* =========================
+   STYLES GLOBAUX
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 2rem 0;
+    background-color: black;
+    color: #f5efff;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body.gallery-page {
+    padding: 0.5rem 0;
+}
+
+body.accueil {
+    background-image: url('img/banquise.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+body.boite-aux-lettres {
+    background-image: url('img/liege.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================
+   PAGE D'ACCUEIL
+   ========================= */
+
+.boite_bouton {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+}
+
+.boite_bouton a {
+    background-image: url('img/boite.png');
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    width: 120px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.boite_bouton a:hover {
+    transform: scale(1.1) rotate(-2deg);
+}
+
+/* =========================
+   PAGE BOITE AUX LETTRES
+   ========================= */
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+.letter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.letter-item {
+    text-align: center;
+}
+
+.lettre_bouton a {
+    background-image: url('img/lettre.png');
+    background-size: cover;
+    background-position: center;
+    height: 122px;
+    width: 204px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+}
+
+.lettre_bouton a:hover {
+    transform: scale(1.1) rotate(-2deg);
+}
+
+/* Images différentes selon l'état */
+.lettre_bouton.fini a {
+    background-image: url('img/lettre.png');
+}
+
+.lettre_bouton.coming-soon a {
+    background-image: url('img/lettre_soon.png');
+}
+
+.txt {
+    margin-top: 0.5rem;
+    font-size: 14px;
+    color: #f5efff;
+}
+
+/* =========================
+   BOUTON RETOUR
+   ========================= */
+
+.retour_bouton {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.retour_bouton a {
+    padding: 1rem 2rem;
+    background-color: #333;
+    color: #f5efff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.retour_bouton a:hover {
+    background-color: #555;
+}
+
+/* Style spécifique pour la page boite aux lettres */
+body.boite-aux-lettres .retour_bouton a {
+    background-color: #2d2f53;
+}
+
+body.boite-aux-lettres .retour_bouton a:hover {
+    background-color: #773e69;
+}
+
+/* =========================
+   PAGES DE LETTRES
+   ========================= */
+
+.letter-content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    line-height: 1.8;
+}
+
+.letter-content h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #f5efff;
+}
+
+body.gallery-page .letter-content {
+    margin: 0.5rem auto;
+}
+
+body.gallery-page .letter-content h1 {
+    margin-bottom: 1rem;
+}
+
+.letter-content img {
+    display: block;
+    margin: 2rem auto;
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================
+   GALERIE D'IMAGES (pour Tête et Vert)
+   ========================= */
+
+.image-gallery {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin: 2rem 0;
+    justify-content: center;
+}
+
+#fleur-container,
+#tete-container {
+    width: 400px;
+    height: 70vh;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Cadre polaroid */
+    background: white;
+    padding: 1rem;
+    padding-bottom: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+    /* Transition fade */
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.gallery-image.fade-out {
+    opacity: 0;
+}
+
+#texte-container,
+#texte-container-tete {
+    width: 400px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+body.page-vert #texte-container {
+    align-items: flex-start;
+}
+
+body.page-vert .gallery-button {
+    align-self: center;
+}
+
+.gallery-text {
+    margin: 0;
+    font-style: italic;
+    line-height: 1.6;
+    min-height: 150px;
+    display: flex;
+    align-items: flex-start;
+    /* Effet de citation */
+    border-left: 4px solid;
+    padding-left: 1.5rem;
+    padding-right: 1rem;
+}
+
+/* Couleurs spécifiques par page */
+body.page-vert .gallery-text {
+    border-left-color: #4ade80;
+    text-align: justify;
+    align-items: flex-start;
+    height: 150px;
+}
+
+body.page-vert .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+body.page-vert .gallery-button {
+    background-color: #16a34a;
+}
+
+body.page-vert .gallery-button:hover {
+    background-color: #22c55e;
+}
+
+body.page-tete #texte-container-tete {
+    align-items: flex-start;
+}
+
+body.page-tete .gallery-text {
+    border-left-color: #60a5fa;
+    text-align: justify;
+    align-items: flex-start;
+    height: 150px;
+}
+
+body.page-tete .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+body.page-tete .gallery-button {
+    background-color: #2563eb;
+    align-self: center;
+}
+
+body.page-tete .gallery-button:hover {
+    background-color: #3b82f6;
+}
+
+.gallery-button {
+    padding: 1rem 2rem;
+    background-color: #444;
+    color: #f5efff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    align-self: center;
+    width: fit-content;
+}
+
+.gallery-button:hover {
+    background-color: #666;
+}
+
+/* Responsive pour petits écrans */
+@media (max-width: 768px) {
+    .image-gallery {
+        flex-direction: column;
+    }
+
+    #fleur-container,
+    #tete-container {
+        flex: 1;
+        max-width: 100%;
+    }
+
+    #texte-container,
+    #texte-container-tete {
+        min-width: 100%;
+    }
+
+    .gallery-button {
+        align-self: center;
+    }
+}
+
+/* =========================
+   CERTIFICAT
+   ========================= */
+
+.certificat_bouton {
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    background-color: #444;
+    color: #f5efff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.certificat_bouton:hover {
+    background-color: #666;
+}

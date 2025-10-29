@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tête - Lettres Antarctique</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="gallery-page page-tete">
+    <div class="letter-content">
+        <h1>Si tu as oublié nos têtes</h1>
+
+        <div class="image-gallery">
+            <div id="tete-container">
+                <img class="gallery-image" id="tete-img" src="" alt="tete">
+            </div>
+            <div id="texte-container-tete">
+                <p class="gallery-text" id="tete-texte"></p>
+                <button class="gallery-button" id="btn-tete">Voir une autre tête</button>
+            </div>
+        </div>
+
+        <div class="retour_bouton">
+            <a href="../boite-aux-lettres.html">Retour</a>
+        </div>
+    </div>
+
+    <script>
+        // Liste des têtes
+        const tetes = [
+            {file: "perry", texte: "Sache que ce n'est pas moi qui ai choisi la photo… et je me suis retenu de la regarder… J'ai peur de ce que Manon a choisi pour moi…"},
+            {file: "pa", texte: "Quel bel homme… Dommage qu'on ne voie pas très bien à cause du sac de patates sur son épaule (loin de moi l'idée de vouloir faire une blague limite à ce sujet)."},
+            {file: "eloi", texte: "Je crois qu'il a lâché un pet sur celle-ci…"},
+            {file: "jana", texte: "Alalala, ça c'est une tête qu'on n'oublie pas."},
+            {file: "amour", texte: "Petit cachottier, je n'étais pas au courant que tu en pinçais pour lui ;)"},
+            {file: "eloi_exclu", texte: "Qui ne voudrait pas d'une nuit avec cet Apollon ?"},
+            {file: "perry_exclu", texte: "Parce que je sais que mon corps de rêve te manque <3"},
+            {file: "toi", texte: "Au cas où tu n'aurais pas de miroir, voici à quoi tu ressembles (ou ressemblais). Aujourd'hui, je t'imagine plutôt avec un look à la Robinson Crusoé."}
+        ];
+
+        let tetesRestantes = [...tetes];
+        let currentTete = null;
+
+        function afficherTete() {
+            const img = document.getElementById("tete-img");
+            const texte = document.getElementById("tete-texte");
+
+            // Fade out
+            img.classList.add('fade-out');
+
+            setTimeout(() => {
+                img.src = "../img/tetes/" + currentTete.file + ".png";
+                texte.textContent = currentTete.texte;
+                // Fade in
+                img.classList.remove('fade-out');
+            }, 300);
+        }
+
+        function changerTete() {
+            if (tetesRestantes.length === 0) {
+                tetesRestantes = [...tetes];
+            }
+            const index = Math.floor(Math.random() * tetesRestantes.length);
+            currentTete = tetesRestantes[index];
+            tetesRestantes.splice(index, 1);
+            afficherTete();
+        }
+
+        // Afficher une tête au chargement
+        changerTete();
+
+        // Bouton pour changer de tête
+        document.getElementById("btn-tete").addEventListener("click", changerTete);
+    </script>
+</body>
+</html>
