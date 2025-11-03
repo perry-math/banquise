@@ -13,11 +13,13 @@ banquise/
 │
 ├── lettres/                   # Dossier contenant toutes les pages de lettres
 │   ├── _template.html         # Template pour créer de nouvelles lettres
-│   ├── cuddle.html            # ✅ Lettre terminée
+│   ├── debut.html             # ✅ Lettre terminée (style manuscrit)
+│   ├── cuddle.html            # ⏳ Lettre non terminée
 │   ├── vert.html              # ✅ Lettre terminée (avec galerie de plantes)
 │   ├── tete.html              # ✅ Lettre terminée (avec galerie de têtes)
 │   ├── manchot.html           # ✅ Lettre terminée (avec certificat PDF)
 │   ├── aurore.html            # ✅ Lettre terminée
+│   ├── ennui.html             # ✅ Lettre terminée (avec lecteur audio)
 │   └── ... (autres lettres à créer)
 │
 ├── img/                       # Images du projet
@@ -37,13 +39,15 @@ banquise/
 ## Statut des lettres
 
 ### Lettres terminées (affichent lettre.png)
-- ✅ Cuddle - Simple lettre avec image d'abeille
+- ✅ Début - Lettre d'introduction avec style manuscrit
 - ✅ Vert - Galerie de plantes avec JavaScript
 - ✅ Tête - Galerie de photos avec JavaScript
 - ✅ Manchot - Avec bouton pour ouvrir un certificat PDF
 - ✅ Aurore - (contenu à compléter)
+- ✅ Ennui - Lecteur audio de podcast avec design moderne type Deezer
 
 ### Lettres à venir (affichent lettre_soon.png)
+- ⏳ Cuddle - Simple lettre avec image d'abeille (page non terminée)
 - ⏳ Anniversaire
 - ⏳ Noël
 - ⏳ Halloween
@@ -52,7 +56,6 @@ banquise/
 - ⏳ Amis
 - ⏳ Artifice
 - ⏳ Solitude
-- ⏳ Ennui
 - ⏳ Tempête
 - ⏳ Blague
 - ⏳ Début

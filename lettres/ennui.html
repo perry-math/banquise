@@ -9,31 +9,78 @@
         .player {
             max-width: 500px;
             margin: 2rem auto;
-            padding: 1.5rem;
-            background-color: #222;
-            border-radius: 10px;
+            padding: 2rem;
+            /* Effet glassmorphism avec dégradé sombre */
+            background: linear-gradient(135deg, rgba(40, 40, 60, 0.7), rgba(60, 40, 80, 0.5));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .podcast-title {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #f5efff;
+            font-weight: bold;
+        }
+
+        /* Style pour l'image - pas de bords arrondis */
+        .podcast-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .progress-container {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
         }
 
         .player-controls {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            align-items: center;
+            gap: 1.5rem;
         }
 
         .audio_btn {
-            background-color: #444;
+            background: rgba(255, 255, 255, 0.1);
             color: #f5efff;
             border: none;
-            padding: 0.8rem 1.2rem;
-            border-radius: 5px;
+            padding: 0.8rem;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
-            transition: background-color 0.3s ease;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
         }
 
         .audio_btn:hover {
-            background-color: #666;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .audio_btn.play-pause {
+            width: 65px;
+            height: 65px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .audio_btn.play-pause:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(168, 85, 247, 0.5);
         }
 
         .progress-container {
@@ -42,58 +89,106 @@
 
         #progressBar {
             width: 100%;
-            height: 8px;
+            height: 6px;
             -webkit-appearance: none;
             appearance: none;
-            background: #444;
-            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
             outline: none;
+            cursor: pointer;
+            transition: height 0.2s ease;
+        }
+
+        #progressBar:hover {
+            height: 8px;
         }
 
         #progressBar::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 16px;
-            height: 16px;
-            background: #f5efff;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
             cursor: pointer;
             border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(168, 85, 247, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        #progressBar::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.7);
         }
 
         #progressBar::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
-            background: #f5efff;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
             cursor: pointer;
             border-radius: 50%;
             border: none;
+            box-shadow: 0 2px 10px rgba(168, 85, 247, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        #progressBar::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.7);
+        }
+
+        /* Effet de remplissage progressif */
+        #progressBar::-webkit-slider-runnable-track {
+            background: linear-gradient(to right,
+                #a855f7 0%,
+                #ec4899 var(--progress, 0%),
+                rgba(255, 255, 255, 0.2) var(--progress, 0%));
+            border-radius: 10px;
+            height: 6px;
+        }
+
+        #progressBar::-moz-range-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 6px;
+        }
+
+        #progressBar::-moz-range-progress {
+            background: linear-gradient(to right, #a855f7, #ec4899);
+            border-radius: 10px;
+            height: 6px;
         }
 
         .time-display {
             display: flex;
             justify-content: space-between;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-            color: #ccc;
+            align-items: center;
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+            color: rgba(245, 239, 255, 0.7);
+        }
+
+        .speed-indicator {
+            background: rgba(168, 85, 247, 0.2);
+            padding: 0.3rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: #a855f7;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="letter-content">
-        <h1>Ennui</h1>
-
-        <p>Si tu as 10 min à perdre :</p>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">Si tu as 20 min à perdre :</p>
 
         <audio id="monPodcast" src="../son/podcast-manchot-and-shit.mp3"></audio>
 
         <div class="player">
-            <!-- Boutons principaux -->
-            <div class="player-controls">
-                <button class="audio_btn" onclick="skip(-10)">⏪</button>
-                <button class="audio_btn play-pause" onclick="togglePlay()">⏯️</button>
-                <button class="audio_btn" onclick="skip(10)">⏩</button>
-                <button class="audio_btn" onclick="changeSpeed()">⚡</button>
-            </div>
+            <!-- Titre du podcast -->
+            <div class="podcast-title">🎙️ Podcast Manchot & Shit</div>
+
+            <!-- Image du podcast -->
+            <img src="../img/manchot.png" alt="Podcast Manchot" class="podcast-image">
 
             <!-- Barre de progression et temps -->
             <div class="progress-container">
@@ -101,8 +196,17 @@
                        onchange="seekAudio(this.value)" />
                 <div class="time-display">
                     <span id="currentTime">0:00</span>
+                    <span class="speed-indicator" id="speedDisplay">1.0x</span>
                     <span id="duration">0:00</span>
                 </div>
+            </div>
+
+            <!-- Boutons de contrôle -->
+            <div class="player-controls">
+                <button class="audio_btn" onclick="skip(-10)">⏪</button>
+                <button class="audio_btn play-pause" onclick="togglePlay()">▶️</button>
+                <button class="audio_btn" onclick="skip(10)">⏩</button>
+                <button class="audio_btn" onclick="changeSpeed()">⚡</button>
             </div>
         </div>
 
@@ -116,15 +220,19 @@
         const progressBar = document.getElementById("progressBar");
         const currentTimeEl = document.getElementById("currentTime");
         const durationEl = document.getElementById("duration");
+        const speedDisplay = document.getElementById("speedDisplay");
+        const playPauseBtn = document.querySelector(".play-pause");
         let speeds = [1, 1.25, 1.5, 2];
         let speedIndex = 0;
 
-        // Lecture / Pause
+        // Lecture / Pause avec changement d'icône
         function togglePlay() {
             if (audio.paused) {
                 audio.play();
+                playPauseBtn.textContent = "⏸️";
             } else {
                 audio.pause();
+                playPauseBtn.textContent = "▶️";
             }
         }
 
@@ -133,19 +241,18 @@
             audio.currentTime += seconds;
         }
 
-        // Changer vitesse
+        // Changer vitesse avec affichage permanent
         function changeSpeed() {
             speedIndex = (speedIndex + 1) % speeds.length;
             audio.playbackRate = speeds[speedIndex];
-            const btn = event.target;
-            const originalText = btn.textContent;
-            btn.textContent = speeds[speedIndex] + "x";
-            setTimeout(() => { btn.textContent = originalText; }, 1000);
+            speedDisplay.textContent = speeds[speedIndex] + "x";
         }
 
-        // Barre de progression
+        // Barre de progression avec effet de remplissage coloré
         audio.addEventListener("timeupdate", () => {
-            progressBar.value = (audio.currentTime / audio.duration) * 100;
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.value = progress;
+            progressBar.style.setProperty('--progress', progress + '%');
 
             // Format minutes:secondes
             const curM = Math.floor(audio.currentTime / 60);
@@ -161,6 +268,11 @@
         function seekAudio(value) {
             audio.currentTime = (value / 100) * audio.duration;
         }
+
+        // Réinitialiser l'icône quand l'audio se termine
+        audio.addEventListener("ended", () => {
+            playPauseBtn.textContent = "▶️";
+        });
     </script>
 </body>
 </html>

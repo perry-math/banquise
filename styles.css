@@ -9,7 +9,11 @@
 body {
     margin: 0;
     padding: 2rem 0;
-    background-color: black;
+    background-image: url('img/liege.png?v=2');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #2c2e3e;
     color: #f5efff;
     font-family: "Courier New", monospace;
     font-weight: bold;
@@ -25,13 +29,6 @@ body.gallery-page {
 
 body.accueil {
     background-image: url('img/banquise.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-body.boite-aux-lettres {
-    background-image: url('img/liege.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -133,22 +130,13 @@ a {
 
 .retour_bouton a {
     padding: 1rem 2rem;
-    background-color: #333;
+    background-color: #2d2f53;
     color: #f5efff;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 .retour_bouton a:hover {
-    background-color: #555;
-}
-
-/* Style spécifique pour la page boite aux lettres */
-body.boite-aux-lettres .retour_bouton a {
-    background-color: #2d2f53;
-}
-
-body.boite-aux-lettres .retour_bouton a:hover {
     background-color: #773e69;
 }
 
