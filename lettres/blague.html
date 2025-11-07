@@ -5,16 +5,193 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blague - Lettres Antarctique</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .container {
+            padding-left: 3rem;
+            padding-right: 3rem;
+        }
+
+        .letter-grid {
+            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
+            justify-content: center;
+        }
+
+        .card-item {
+            text-align: center;
+        }
+
+        .card {
+            height: 200px;
+            width: 180px;
+            perspective: 1000px;
+            cursor: pointer;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .letter-grid {
+                gap: 2rem;
+            }
+
+            .card {
+                height: 180px;
+                width: 160px;
+            }
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.8rem;
+            line-height: 1.3;
+            text-align: center;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .card-back p {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    <div class="letter-content">
-        <h1>Blague</h1>
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 2rem; color: #f5efff;">Blagues Nulles</h1>
 
-        <p>Contenu à venir...</p>
+        <div class="letter-grid" id="cardsGrid"></div>
 
         <div class="retour_bouton">
             <a href="../boite-aux-lettres.html">Retour</a>
         </div>
     </div>
+
+    <script>
+        const blagues = [
+            "C'est l'histoire du ptit dej — Pas de bol.",
+            "C'est l'histoire d'une blague vaseuse — Mets tes bottes.",
+            "Un pingouin qui respire par les fesses s'assoit et meurt.",
+            "Une chauve-souris avec une perruque s'appelle une souris.",
+            "Un escargot croisant une limace dit : 'Oh la belle décapotable'.",
+            "Les canards sont toujours à l'heure parce qu'ils sont dans l'étang.",
+            "Un crocodile rencontrant une femelle la Lacoste.",
+            "Un petit pois avec épée face à une carotte armée : un bon duel.",
+            "On ramasse la papaye avec une foufourche.",
+            "Les pêcheurs ne sont pas gros car ils surveillent leur ligne.",
+            "La blague de la chaise est tellement longue.",
+            "Un papier tombant à l'eau crie 'Au secours ! J'ai pas pied !'",
+            "Il n'y a plus de mammouths car il n'y a plus de pappouths.",
+            "Une fraise sur un cheval fait Tagada Tagada.",
+            "Deux patates traversent la route ; l'une écrasée, l'autre dit 'Oh purée !'",
+            "Les Belges viennent à la messe avec du savon pour l'Ave Maria.",
+            "Si on veut deux poussins sur trois, on en pousse un.",
+            "Une pastèque n'est pas un steak.",
+            "Paf le chien traverse la route — Et paf le chien !",
+            "Toin toin ? Un tanard.",
+            "Un concombre vert avec cape imite Super Tomate.",
+            "La mamie qui fait peur aux voleurs : Mamie Traillette.",
+            "Un chien sans pattes : on ne l'appelle pas, on le cherche.",
+            "Vert, sous l'eau, buzzzzz : un chou marin ruche.",
+            "Un kiwi vert et poilu répond 'parce que j'suis un kiwi, ducon'.",
+            "Un bébé éléphant prématuré s'appelle un éléphant tôt.",
+            "Un canif est un petit fien.",
+            "Le Yémen : Yeah, man.",
+            "'Quoi ?' — 'Feur. Gratuit pour les chauves.'",
+            "Les vaches ferment les yeux pendant la traite pour faire du lait concentré.",
+            "Un mec rentre dans un café — Et plouf.",
+            "Un aveugle rentre au bar, puis dans une table, chaise, mur...",
+            "Pas de ballon sur 'Questions Pour Un Champion' car Julien Lepers.",
+            "Une grenouille dans un mixeur devient rouge.",
+            "Un mec entre au bar disant 'Salut c'est moi !' — Mais c'était pas lui.",
+            "On va aux toilettes avec du pain pour donner aux Canards W-C.",
+            "Lapin et bouteille plastique : tous deux plastique sauf le lapin.",
+            "Deux vaches : l'une craint la vache folle, l'autre est lapin.",
+            "La plus intelligente : Larousse, le dictionnaire.",
+            "Vert poussant au jardin : un extraterrestre qui fait caca.",
+            "Un poussin de 200kg crie PIOUUUU!",
+            "Une brioche n'allant aux sports d'hiver car elle ne savait Pasquier.",
+            "Chat se nettoyant dans le désert — Tu donnes ta langue au chat ?",
+            "L'histoire du lit superposé est à dormir debout.",
+            "L'histoire du nombril — Bril.",
+            "La blague de la chaise est pliante.",
+            "Deux putois : l'un dit 'tu pues toi'.",
+            "Un bossu sans bras ni jambes est une madeleine.",
+            "Flamant rose prenant son pied tombe.",
+            "Les girafes ont un long cou car elles puent des fesses."
+        ];
+
+        // Créer les cartes
+        const cardsGrid = document.getElementById('cardsGrid');
+
+        blagues.forEach((blague, index) => {
+            const cardItem = document.createElement('div');
+            cardItem.className = 'card-item';
+
+            cardItem.innerHTML = `
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            ${index + 1}
+                        </div>
+                        <div class="card-back">
+                            <p>${blague}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const card = cardItem.querySelector('.card');
+            card.addEventListener('click', function() {
+                this.classList.toggle('flipped');
+            });
+
+            cardsGrid.appendChild(cardItem);
+        });
+    </script>
 </body>
 </html>

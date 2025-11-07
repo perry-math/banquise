@@ -5,8 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lettres Antarctique</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body.accueil {
+            background-image: none !important;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .interactive-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .skieur-zone {
+            position: absolute;
+            left: 71%;
+            top: 33%;
+            width: 56px;
+            height: 56px;
+            cursor: pointer;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .boite_bouton {
+            z-index: 100;
+        }
+
+        .bulle-texte {
+            position: absolute;
+            background: white;
+            color: #2c2e3e;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            left: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .skieur-zone:hover .bulle-texte {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body class="accueil">
+    <!-- Image de fond fixe -->
+    <div class="background-container">
+        <img src="img/banquise.png" alt="Banquise" class="background-image">
+    </div>
+
+    <!-- Couche interactive avec zones cliquables -->
+    <div class="interactive-layer">
+        <!-- Zone interactive du skieur -->
+        <div class="skieur-zone">
+            <div class="bulle-texte">fiouuuuuuuu</div>
+        </div>
+    </div>
+
     <!-- PAGE D'ACCUEIL -->
     <div class="boite_bouton">
         <a href="boite-aux-lettres.html" title="Ouvrir la boîte aux lettres"></a>

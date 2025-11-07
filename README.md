@@ -14,12 +14,13 @@ banquise/
 ├── lettres/                   # Dossier contenant toutes les pages de lettres
 │   ├── _template.html         # Template pour créer de nouvelles lettres
 │   ├── debut.html             # ✅ Lettre terminée (style manuscrit)
-│   ├── cuddle.html            # ⏳ Lettre non terminée
+│   ├── ennui.html             # ✅ Lettre terminée (avec lecteur audio)
 │   ├── vert.html              # ✅ Lettre terminée (avec galerie de plantes)
 │   ├── tete.html              # ✅ Lettre terminée (avec galerie de têtes)
 │   ├── manchot.html           # ✅ Lettre terminée (avec certificat PDF)
-│   ├── aurore.html            # ✅ Lettre terminée
-│   ├── ennui.html             # ✅ Lettre terminée (avec lecteur audio)
+│   ├── aurore.html            # ✅ Lettre terminée (image défilante)
+│   ├── cuddle.html            # ✅ Lettre terminée (avec abeilles animées)
+│   ├── blague.html            # ✅ Lettre terminée (50 cartes retournables avec blagues)
 │   └── ... (autres lettres à créer)
 │
 ├── img/                       # Images du projet
@@ -43,11 +44,12 @@ banquise/
 - ✅ Vert - Galerie de plantes avec JavaScript
 - ✅ Tête - Galerie de photos avec JavaScript
 - ✅ Manchot - Avec bouton pour ouvrir un certificat PDF
-- ✅ Aurore - (contenu à compléter)
+- ✅ Aurore - Image défilante sur fond noir
 - ✅ Ennui - Lecteur audio de podcast avec design moderne type Deezer
+- ✅ Cuddle - Lettre manuscrite avec abeilles animées en arrière-plan
+- ✅ Blague - 50 cartes retournables avec blagues nulles (effet 3D flip)
 
 ### Lettres à venir (affichent lettre_soon.png)
-- ⏳ Cuddle - Simple lettre avec image d'abeille (page non terminée)
 - ⏳ Anniversaire
 - ⏳ Noël
 - ⏳ Halloween
@@ -57,8 +59,6 @@ banquise/
 - ⏳ Artifice
 - ⏳ Solitude
 - ⏳ Tempête
-- ⏳ Blague
-- ⏳ Début
 - ⏳ Fin
 - ⏳ Bravo
 - ⏳ Dispute
@@ -108,11 +108,12 @@ Tous les styles sont dans `styles.css` et sont organisés par sections :
 
 ## JavaScript
 
-Les pages qui utilisent JavaScript (Vert, Tête) ont leur code directement dans la page HTML.
+Les pages qui utilisent JavaScript (Vert, Tête, Blague) ont leur code directement dans la page HTML.
 Le JavaScript est utilisé pour :
 - Afficher aléatoirement des images dans les galeries
 - Gérer les boutons de navigation
 - Ouvrir des fichiers PDF
+- Créer dynamiquement les cartes retournables avec animation 3D (Blague)
 
 ## Notes
 

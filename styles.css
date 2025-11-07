@@ -359,3 +359,41 @@ body.page-tete .gallery-button:hover {
 .certificat_bouton:hover {
     background-color: #666;
 }
+
+/* =========================
+   PAGE AURORE (Image de fond défilante)
+   ========================= */
+
+body.page-aurore {
+    background-color: #000000;
+    background-image: none;
+    padding: 0;
+    min-height: 100vh;
+    display: block;
+}
+
+body.page-aurore .letter-content {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+body.page-aurore .aurore-image {
+    width: 70%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+body.page-aurore .retour_bouton {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    margin: 0;
+}

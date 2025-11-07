@@ -5,22 +5,153 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuddle - Lettres Antarctique</title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .bee-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bee {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-image: url('../img/abeille.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, -20px) rotate(5deg);
+            }
+            50% {
+                transform: translate(0, -40px) rotate(0deg);
+            }
+            75% {
+                transform: translate(-20px, -20px) rotate(-5deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        .handwritten-letter {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 3rem;
+            padding-top: 2rem;
+            background: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(250, 248, 245, 0.95) 100%);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            line-height: 2.5rem;
+            color: #2c3e50;
+            position: relative;
+            word-spacing: 0.3rem;
+            z-index: 2;
+        }
+
+        .handwritten-letter::before {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                transparent,
+                transparent calc(2.5rem - 1px),
+                rgba(100, 149, 237, 0.2) calc(2.5rem - 1px),
+                rgba(100, 149, 237, 0.2) 2.5rem
+            );
+            pointer-events: none;
+        }
+
+        .handwritten-letter p {
+            margin: 0;
+            text-indent: 2rem;
+            position: relative;
+        }
+
+        .handwritten-letter p:first-child {
+            margin-top: 0;
+        }
+
+        .handwritten-letter strong {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .handwritten-letter {
+            transform: rotate(-0.5deg);
+        }
+
+        .letter-content {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
 </head>
 <body>
+    <div class="bee-container" id="beeContainer"></div>
+
     <div class="letter-content">
-        <h1>Besoin d'un câlin ?</h1>
+        <div class="handwritten-letter">
+            <p><strong>bah alors ? besoin d'un câlin ?</strong></p>
 
-        <p>bohhhhh. tant mieux j'avais prévue le coup ;)</p>
+            <p>bohhhhh, pauvre chouu </p>
 
-        <p>bon ça va être compliqué de te faire un câlin, et j'espère que tu es suffisamment proche de quelqu'un pour que cette sensation puisse passer.</p>
+            <p>bon ça va être compliqué de te faire un câlin, et j'espère que tu es suffisamment proche de quelqu'un pour que le manque puisse passer.</p>
 
-        <p>en tout cas voici une petite abeille que normalement tu connais bien, je pense qu'elle ne pourra pas faire de câlin mais apparemment les doudou c'est pas mal quand on est en manque de câlin.</p>
+            <p>en tout cas voici une petite abeille que normalement tu connais bien, je pense qu'elle ne pourra pas faire de câlin mais apparemment les doudou c'est pas mal quand on manque de ça.</p>
 
-        <img src="../img/abeille.png" alt="Une petite abeille" style="width: 50%; height: auto; display: block; margin: 2em auto;">
+            <p>et en plus cette abeille pourra frimer d'être allée en antarctique ! </p> 
+        </div>
 
         <div class="retour_bouton">
             <a href="../boite-aux-lettres.html">Retour</a>
         </div>
     </div>
+
+    <script>
+        const beeContainer = document.getElementById('beeContainer');
+        const numberOfBees = 30;
+
+        for (let i = 0; i < numberOfBees; i++) {
+            const bee = document.createElement('div');
+            bee.className = 'bee';
+
+            // Position aléatoire
+            bee.style.left = Math.random() * 100 + '%';
+            bee.style.top = Math.random() * 100 + '%';
+
+            // Durée d'animation aléatoire
+            bee.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+
+            // Délai d'animation aléatoire
+            bee.style.animationDelay = Math.random() * 2 + 's';
+
+            beeContainer.appendChild(bee);
+        }
+    </script>
 </body>
 </html>
