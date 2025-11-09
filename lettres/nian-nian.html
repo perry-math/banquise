@@ -5,26 +5,525 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nian Nian - Lettres Antarctique</title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        /* Écran de mot de passe */
+        .password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .password-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .password-box h2 {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .password-box input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-family: 'Caveat', cursive;
+        }
+
+        .password-box button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Caveat', cursive;
+            transition: background 0.3s;
+        }
+
+        .password-box button:hover {
+            background: #2980b9;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .error-message.show {
+            opacity: 1;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Livre */
+        .book-container {
+            perspective: 2000px;
+            width: 70vw;
+            max-width: 800px;
+            position: relative;
+            margin-top: 2rem;
+        }
+
+        .book {
+            width: 100%;
+            height: auto;
+            min-height: 60vh;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.5s;
+        }
+
+        .book.closed {
+            transform: rotateY(0deg);
+        }
+
+        .book.opening {
+            transform: rotateY(0deg);
+        }
+
+        .book-pages {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 500px;
+            background: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(250, 248, 245, 0.95) 100%);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            backface-visibility: hidden;
+            opacity: 0;
+            overflow: visible;
+            padding: 0;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+        }
+
+        .book-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #8B7355 0%, #A0826D 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            transform-origin: left center;
+            transition: all 1.5s ease;
+            cursor: pointer;
+            z-index: 10;
+            height: 60vh;
+            min-height: 500px;
+            opacity: 1;
+            transform: rotateY(0deg);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .book-cover.open {
+            opacity: 0;
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        .book-cover:hover:not(.open) {
+            filter: brightness(1.1);
+        }
+
+        .click-hint {
+            margin-top: 2rem;
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .book-cover-content {
+            text-align: center;
+            color: #f4f1ea;
+            font-family: 'Caveat', cursive;
+        }
+
+        .book-cover-content h1 {
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .book-pages.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .book-pages::before {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                transparent,
+                transparent calc(2.5rem - 1px),
+                rgba(100, 149, 237, 0.2) calc(2.5rem - 1px),
+                rgba(100, 149, 237, 0.2) 2.5rem
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            line-height: 2.5rem;
+            color: #2c3e50;
+            word-spacing: 0.3rem;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem;
+            padding-top: 2rem;
+            padding-bottom: 4rem;
+            z-index: 2;
+            min-height: auto;
+        }
+
+        .page.active {
+            display: block;
+            position: relative;
+        }
+
+        .page[data-page="1"] {
+            height: 60vh;
+            min-height: 500px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .page[data-page="1"].active {
+            display: flex;
+        }
+
+        .page p {
+            margin: 0 0 2rem 0;
+            text-indent: 2rem;
+        }
+
+        .page strong {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Navigation */
+        .navigation {
+            display: none;
+            margin: 3rem auto 0;
+            justify-content: center;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .navigation.visible {
+            display: flex;
+        }
+
+        .nav-button {
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button:hover:not(:disabled) {
+            background: rgba(41, 128, 185, 1);
+            transform: scale(1.1);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .retour_bouton {
+            display: none;
+            margin: 2rem auto 3rem;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .retour_bouton.visible {
+            display: block;
+        }
+
+        .retour_bouton a {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #2c3e50;
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .retour_bouton a:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-number {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="letter-content">
-        <h1>Nian Nian</h1>
-        <p> C’est bien beau toutes ces pages pleines de blagues, mais il fallait bien ajouter un peu de sérieux à tout ça.
-            Jusqu’à ton départ, je ne savais pas vraiment quoi écrire qui pourrait te toucher. Et puis, le jour où tu es parti, j’ai eu besoin de poser mes émotions quelque part… alors pourquoi pas ici ?
-            J’ai décidé de te donner accès à cette partie seulement à la fin de ton séjour en Antarctique. J'ai trop peur de te plomber le moral sinon.
-            Donc prépare toi à lire quelque chose qui ressemble beaucoup à un journal intime.</p>
-        <p> 07/11/2025
-            Bon… tu viens de partir. Putain, ça a été dur, toute la journée.
-            Ce matin, à l’aéroport, après qu’on se soit dit au revoir, j’avais qu’une seule envie : revenir dans tes bras et ne plus te lâcher. Mais je savais que si je te refaisais un câlin, j’allais me mettre à chialer devant tout le monde. En soit, pleurer devant tout le monde, je m’en fiche mais je ne voulais pas pleurer devant toi, et que tu te souvienne de moi en pleurs. C’est bête, hein ?
-            Résultat, j’ai fini par craquer dans la voiture, ahah. Je crois qu’il n’y a que ta sœur qui l’a remarqué, je me suis bien cachée.
-            Je ne pensais pas que ton départ serait aussi difficile. J’étais persuadée que le plus dur, ce serait les moments où j’aurais envie de te voir sans pouvoir le faire… mais en fait, c’est tout de suite que ça m’a frappée.
-            Je suis rentrée chez moi en larmes, j’ai dormi jusqu’à midi, puis j’ai recommencé à pleurer. Je ne savais même pas pourquoi. Il n’y avait rien de particulier qui me traversait l’esprit, juste l'idée que je ne te verrai plus pendant longtemps ça me submergée complètement.
-            Mais malgré tout ça, je suis incroyablement contente pour toi et surtout fière !
-            Contente que tu vives cette aventure incroyable !
-            En tout cas écrire tout ça m’a fait du bien. Et j'ai déjà hâte de te revoir.</p>
-        <div class="retour_bouton">
-            <a href="../boite-aux-lettres.html">Retour</a>
+    <!-- Écran de mot de passe -->
+    <div class="password-screen" id="passwordScreen">
+        <div class="password-box">
+            <h2>Entrez le mot de passe</h2>
+            <input type="password" id="passwordInput" placeholder="****" maxlength="4">
+            <button onclick="checkPassword()">Valider</button>
+            <div class="error-message" id="errorMessage">Mot de passe incorrect</div>
         </div>
     </div>
+
+    <!-- Livre -->
+    <div class="book-container hidden" id="bookContainer">
+        <div class="book closed" id="book">
+            <div class="book-cover" id="bookCover" onclick="openBook()">
+                <div class="book-cover-content">
+                    <h1>Nian Nian</h1>
+                    <p style="font-size: 1.5rem; margin-top: 1rem;">Journal Antarctique</p>
+                </div>
+                <div class="click-hint">Cliquez pour ouvrir</div>
+            </div>
+
+            <div class="book-pages" id="bookPages">
+                <!-- Page 1 -->
+                <div class="page active" data-page="1">
+                    <p>C'est bien beau toutes ces pages pleines de blagues, mais il fallait bien ajouter un peu de sérieux à tout ça. Jusqu'à ton départ, je ne savais pas vraiment quoi écrire qui pourrait te toucher. Et puis, le jour où tu es parti, j'ai eu besoin de poser mes émotions quelque part… alors pourquoi pas ici ? J'ai décidé de te donner accès à cette partie seulement à la fin de ton séjour en Antarctique. J'ai trop peur de te plomber le moral sinon. Donc prépare toi à lire quelque chose qui ressemble beaucoup à un journal intime.</p>
+                </div>
+
+                <!-- Page 2 -->
+                <div class="page" data-page="2">
+                    <p><strong>07/11/2025</strong></p>
+
+                    <p>Bon… tu viens de partir. Putain, ça a été dur, toute la journée.</p>
+
+                    <p>Ce matin, à l'aéroport, après qu'on se soit dit au revoir, j'avais qu'une seule envie : revenir dans tes bras et ne plus te lâcher. Mais je savais que si je te refaisais un câlin, j'allais me mettre à chialer devant tout le monde. En soit, pleurer devant tout le monde, je m'en fiche mais je ne voulais pas pleurer devant toi, et que tu te souvienne de moi en pleurs. C'est bête, hein ?</p>
+
+                    <p>Résultat, j'ai fini par craquer dans la voiture, ahah. Je crois qu'il n'y a que ta sœur qui l'a remarqué, je me suis bien cachée.</p>
+
+                    <p>Je ne pensais pas que ton départ serait aussi difficile. J'étais persuadée que le plus dur, ce serait les moments où j'aurais envie de te voir sans pouvoir le faire… mais en fait, c'est tout de suite que ça m'a frappée.</p>
+
+                    <p>Je suis rentrée chez moi en larmes, j'ai dormi jusqu'à midi, puis j'ai recommencé à pleurer. Je ne savais même pas pourquoi. Il n'y avait rien de particulier qui me traversait l'esprit, juste l'idée que je ne te verrai plus pendant longtemps ça me submergée complètement.</p>
+
+                    <p>Mais malgré tout ça, je suis incroyablement contente pour toi et surtout fière !</p>
+
+                    <p>Contente que tu vives cette aventure incroyable !</p>
+
+                    <p>En tout cas écrire tout ça m'a fait du bien. Et j'ai déjà hâte de te revoir.</p>
+                </div>
+
+                <!-- Page 3 -->
+                <!-- ====== ZONE POUR AJOUTER VOTRE TEXTE ====== -->
+                <div class="page" data-page="3">
+                    <p><strong><!-- Date ici (ex: 08/11/2025) --></strong></p>
+
+                    <!-- Écrivez vos paragraphes ici -->
+                    <p><!-- Votre texte ici --></p>
+
+                    <p><!-- Votre texte ici --></p>
+
+                    <p><!-- Votre texte ici --></p>
+                </div>
+
+                <!-- Page 4 -->
+                <!-- ====== ZONE POUR AJOUTER VOTRE TEXTE ====== -->
+                <div class="page" data-page="4">
+                    <p><strong><!-- Date ici (ex: 09/11/2025) --></strong></p>
+
+                    <!-- Écrivez vos paragraphes ici -->
+                    <p><!-- Votre texte ici --></p>
+
+                    <p><!-- Votre texte ici --></p>
+
+                    <p><!-- Votre texte ici --></p>
+                </div>
+
+                <!-- Page 5 -->
+                <!-- ====== ZONE POUR AJOUTER VOTRE TEXTE ====== -->
+                <div class="page" data-page="5">
+                    <p><strong><!-- Date ici (ex: 10/11/2025) --></strong></p>
+
+                    <!-- Écrivez vos paragraphes ici -->
+                    <p><!-- Votre texte ici --></p>
+
+                    <p><!-- Votre texte ici --></p>
+
+                    <p><!-- Votre texte ici --></p>
+                </div>
+
+                <!-- Page 6 -->
+                <!-- ====== ZONE POUR AJOUTER VOTRE TEXTE ====== -->
+                <div class="page" data-page="6">
+                    <p><strong><!-- Date ici (ex: 11/11/2025) --></strong></p>
+
+                    <!-- Écrivez vos paragraphes ici -->
+                    <p><!-- Votre texte ici --></p>
+
+                    <p><!-- Votre texte ici --></p>
+
+                    <p><!-- Votre texte ici --></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation et bouton retour sous le livre -->
+    <div class="navigation" id="navigation">
+        <button class="nav-button" id="prevBtn" onclick="previousPage()" disabled>‹</button>
+        <button class="nav-button" id="nextBtn" onclick="nextPage()">›</button>
+    </div>
+
+    <div class="retour_bouton" id="retourBtn">
+        <a href="../boite-aux-lettres.html">Retour</a>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 6;
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (password === '0711') {
+                // Masquer l'écran de mot de passe
+                document.getElementById('passwordScreen').classList.add('hidden');
+
+                // Afficher le livre
+                document.getElementById('bookContainer').classList.remove('hidden');
+            } else {
+                errorMessage.classList.add('show');
+                document.getElementById('passwordInput').value = '';
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                }, 2000);
+            }
+        }
+
+        // Permettre la validation avec la touche Entrée
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        function openBook() {
+            document.getElementById('book').classList.remove('closed');
+            document.getElementById('book').classList.add('opening');
+            document.getElementById('bookCover').classList.add('open');
+            document.getElementById('bookPages').classList.add('visible');
+            document.getElementById('navigation').classList.add('visible');
+            document.getElementById('retourBtn').classList.add('visible');
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                document.querySelector(`.page[data-page="${currentPage}"]`).classList.remove('active');
+                currentPage++;
+                document.querySelector(`.page[data-page="${currentPage}"]`).classList.add('active');
+                updateNavigation();
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                document.querySelector(`.page[data-page="${currentPage}"]`).classList.remove('active');
+                currentPage--;
+                document.querySelector(`.page[data-page="${currentPage}"]`).classList.add('active');
+                updateNavigation();
+            }
+        }
+
+        function updateNavigation() {
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+            document.getElementById('pageNumber').textContent = `${currentPage} / ${totalPages}`;
+        }
+
+        // Navigation avec les flèches du clavier
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('passwordScreen').classList.contains('hidden')) {
+                if (e.key === 'ArrowRight') {
+                    nextPage();
+                } else if (e.key === 'ArrowLeft') {
+                    previousPage();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
