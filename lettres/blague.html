@@ -98,6 +98,13 @@
         .card-back p {
             margin: 0;
         }
+
+        .card-back img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -112,6 +119,19 @@
     </div>
 
     <script>
+        // Liste des noms de fichiers dans le dossier img/dossier
+        // Ajoutez simplement le nom de vos fichiers ici (avec l'extension)
+        const imageFiles = [
+            '1.jpg',
+            '2.jpg',
+            '3.png',
+            '4.gif',
+            '5.jpg'
+        ];
+
+        // Génération automatique des chemins complets
+        const images = imageFiles.map(filename => `../img/dossier/${filename}`);
+
         const blagues = [
             "C'est l'histoire du ptit dej — Pas de bol.",
             "C'est l'histoire d'une blague vaseuse — Mets tes bottes.",
@@ -165,12 +185,38 @@
             "Les girafes ont un long cou car elles puent des fesses."
         ];
 
+        // Fonction pour générer des positions aléatoires uniques
+        function getRandomPositions(max, count) {
+            const positions = new Set();
+            while (positions.size < count) {
+                positions.add(Math.floor(Math.random() * max));
+            }
+            return Array.from(positions);
+        }
+
+        // Générer 5 positions aléatoires pour les images
+        const totalCards = blagues.length;
+        const imagePositions = getRandomPositions(totalCards, 5);
+
         // Créer les cartes
         const cardsGrid = document.getElementById('cardsGrid');
 
         blagues.forEach((blague, index) => {
             const cardItem = document.createElement('div');
             cardItem.className = 'card-item';
+
+            // Vérifier si cette position doit contenir une image
+            const imageIndex = imagePositions.indexOf(index);
+            const isImageCard = imageIndex !== -1;
+
+            let cardContent;
+            if (isImageCard) {
+                // Carte avec image
+                cardContent = `<img src="${images[imageIndex]}" alt="Image surprise">`;
+            } else {
+                // Carte avec blague
+                cardContent = `<p>${blague}</p>`;
+            }
 
             cardItem.innerHTML = `
                 <div class="card">
@@ -179,7 +225,7 @@
                             ${index + 1}
                         </div>
                         <div class="card-back">
-                            <p>${blague}</p>
+                            ${cardContent}
                         </div>
                     </div>
                 </div>
