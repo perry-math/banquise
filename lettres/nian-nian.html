@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,8 +127,8 @@
             height: auto;
             min-height: 500px;
             background: linear-gradient(to bottom,
-                rgba(255, 255, 255, 0.95) 0%,
-                rgba(250, 248, 245, 0.95) 100%);
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(250, 248, 245, 0.95) 100%);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             backface-visibility: hidden;
@@ -180,8 +181,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
         .book-cover-content {
@@ -208,12 +216,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: repeating-linear-gradient(
-                transparent,
-                transparent calc(2.5rem - 1px),
-                rgba(100, 149, 237, 0.2) calc(2.5rem - 1px),
-                rgba(100, 149, 237, 0.2) 2.5rem
-            );
+            background: repeating-linear-gradient(transparent,
+                    transparent calc(2.5rem - 1px),
+                    rgba(100, 149, 237, 0.2) calc(2.5rem - 1px),
+                    rgba(100, 149, 237, 0.2) 2.5rem);
             pointer-events: none;
             z-index: 0;
         }
@@ -337,6 +343,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Écran de mot de passe -->
     <div class="password-screen" id="passwordScreen">
@@ -362,7 +369,12 @@
             <div class="book-pages" id="bookPages">
                 <!-- Page 1 -->
                 <div class="page active" data-page="1">
-                    <p>C'est bien beau toutes ces pages pleines de blagues, mais il fallait bien ajouter un peu de sérieux à tout ça. Jusqu'à ton départ, je ne savais pas vraiment quoi écrire qui pourrait te toucher. Et puis, le jour où tu es parti, j'ai eu besoin de poser mes émotions quelque part… alors pourquoi pas ici ? J'ai décidé de te donner accès à cette partie seulement à la fin de ton séjour en Antarctique. J'ai trop peur de te plomber le moral sinon. Donc prépare toi à lire quelque chose qui ressemble beaucoup à un journal intime.</p>
+                    <p>C'est bien beau toutes ces pages pleines de blagues, mais il fallait bien ajouter un peu de
+                        sérieux à tout ça. Jusqu'à ton départ, je ne savais pas vraiment quoi écrire qui pourrait te
+                        toucher. Et puis, le jour où tu es parti, j'ai eu besoin de poser mes émotions quelque part…
+                        alors pourquoi pas ici ? J'ai décidé de te donner accès à cette partie seulement à la fin de ton
+                        séjour en Antarctique. J'ai trop peur de te plomber le moral sinon. Donc prépare toi à lire
+                        quelque chose qui ressemble beaucoup à un journal intime.</p>
                 </div>
 
                 <!-- Page 2 -->
@@ -371,13 +383,22 @@
 
                     <p>Bon… tu viens de partir. Putain, ça a été dur, toute la journée.</p>
 
-                    <p>Ce matin, à l'aéroport, après qu'on se soit dit au revoir, j'avais qu'une seule envie : revenir dans tes bras et ne plus te lâcher. Mais je savais que si je te refaisais un câlin, j'allais me mettre à chialer devant tout le monde. En soit, pleurer devant tout le monde, je m'en fiche mais je ne voulais pas pleurer devant toi, et que tu te souvienne de moi en pleurs. C'est bête, hein ?</p>
+                    <p>Ce matin, à l'aéroport, après qu'on se soit dit au revoir, j'avais qu'une seule envie : revenir
+                        dans tes bras et ne plus te lâcher. Mais je savais que si je te refaisais un câlin, j'allais me
+                        mettre à chialer devant tout le monde. En soit, pleurer devant tout le monde, je m'en fiche mais
+                        je ne voulais pas pleurer devant toi, et que tu te souvienne de moi en pleurs. C'est bête, hein
+                        ?</p>
 
-                    <p>Résultat, j'ai fini par craquer dans la voiture, ahah. Je crois qu'il n'y a que ta sœur qui l'a remarqué, je me suis bien cachée.</p>
+                    <p>Résultat, j'ai fini par craquer dans la voiture, ahah. Je crois qu'il n'y a que ta sœur qui l'a
+                        remarqué, je me suis bien cachée.</p>
 
-                    <p>Je ne pensais pas que ton départ serait aussi difficile. J'étais persuadée que le plus dur, ce serait les moments où j'aurais envie de te voir sans pouvoir le faire… mais en fait, c'est tout de suite que ça m'a frappée.</p>
+                    <p>Je ne pensais pas que ton départ serait aussi difficile. J'étais persuadée que le plus dur, ce
+                        serait les moments où j'aurais envie de te voir sans pouvoir le faire… mais en fait, c'est tout
+                        de suite que ça m'a frappée.</p>
 
-                    <p>Je suis rentrée chez moi en larmes, j'ai dormi jusqu'à midi, puis j'ai recommencé à pleurer. Je ne savais même pas pourquoi. Il n'y avait rien de particulier qui me traversait l'esprit, juste l'idée que je ne te verrai plus pendant longtemps ça me submergée complètement.</p>
+                    <p>Je suis rentrée chez moi en larmes, j'ai dormi jusqu'à midi, puis j'ai recommencé à pleurer. Je
+                        ne savais même pas pourquoi. Il n'y avait rien de particulier qui me traversait l'esprit, juste
+                        l'idée que je ne te verrai plus pendant longtemps ça me submergée complètement.</p>
 
                     <p>Mais malgré tout ça, je suis incroyablement contente pour toi et surtout fière !</p>
 
@@ -389,14 +410,19 @@
                 <!-- Page 3 -->
                 <!-- ====== ZONE POUR AJOUTER VOTRE TEXTE ====== -->
                 <div class="page" data-page="3">
-                    <p><strong><!-- Date ici (ex: 08/11/2025) --></strong></p>
+                    <p><strong>15/11/2025</strong></p>
 
-                    <!-- Écrivez vos paragraphes ici -->
-                    <p><!-- Votre texte ici --></p>
-
-                    <p><!-- Votre texte ici --></p>
-
-                    <p><!-- Votre texte ici --></p>
+                    <p>Bon, c’est le moment de réécrire. Ça fait une semaine que tu es parti. Lundi, j’étais giga énervée contre toi ! Mais vraiment… je crois que je n’avais jamais été aussi énervée contre toi. (Pour rappel : tu ne m’avais donné aucune nouvelle pendant 4 jours, alors que tu venais tout juste de partir et que tout le monde en avait eu grâce au groupe.) Mais bon, tu t’es bien rattrapé : on s’est eus au téléphone, et après ça j’ai eu des nouvelles toute la semaine.</p>
+                    
+                    <p>J’ai fait plein de trucs ces derniers jours. Presque tous les soirs, je mangeais avec quelqu’un. Mais malgré ça, chaque fin de soirée était un peu compliquée. C’est une sensation bizarre juste au moment d’aller me coucher, d’un coup je me sens vide. Je reste là, à regarder le plafond sans rien penser de particulier. Le temps passe, et quelques larmes aussi.</p>
+                    
+                    <p>Mais rassure-toi hein ! Je dis pas ça pour te faire culpabiliser, vraiment pas ! Ce n’est pas quelque chose qui me fait souffrir. C’est plus comme de la mélancolie… et la mélancolie c’est beau. Moi je trouve ça beau en tout cas. Ça montre simplement que je suis attachée à toi.</p>
+                    
+                    <p>D’ailleurs, en parlant d’attachement… je ne comprends pas pourquoi je suis autant attachée à toi, bordel ! Enfin si, quelque part je crois que je comprends. Quand je me pose la question, je ressens une sorte d’apaisement, comme si la réponse était là. Mais impossible de trouver les mots pour l’expliquer.</p>
+                    
+                    <p>Je suis persuadée que si je te disais tout ça en face (en admettant que je réussisse à t’en parler), tu serais mort de rire et tu me dirais que les filles se prennent trop la tête XD.</p>
+                    
+                    <p>Bref, ça me fait sourire de penser que tout ce que j’écris ici n’aura peut-être plus aucun sens dans quelques mois. Et je me connais, je relirai tout ça en rigolant… ou en ayant un peu honte. Mais je te promets que même si je relis ces pages plus tard, je ne changerai rien.</p>
                 </div>
 
                 <!-- Page 4 -->
@@ -475,7 +501,7 @@
         }
 
         // Permettre la validation avec la touche Entrée
-        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 checkPassword();
             }
@@ -515,7 +541,7 @@
         }
 
         // Navigation avec les flèches du clavier
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (document.getElementById('passwordScreen').classList.contains('hidden')) {
                 if (e.key === 'ArrowRight') {
                     nextPage();
@@ -526,4 +552,5 @@
         });
     </script>
 </body>
+
 </html>
