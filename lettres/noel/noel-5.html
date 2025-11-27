@@ -222,10 +222,10 @@
             };
 
             const correctAnswers = {
-                answer1: 'jeu de cartes',
-                answer2: '36',
-                answer3: 'couleur',
-                answer4: '3'
+                answer1: ['jeu de cartes', 'jeu de carte', 'paquet de cartes', 'paquet de carte', 'un jeu de cartes', 'un jeu de carte', 'un paquet de cartes', 'un paquet de carte'],
+                answer2: ['36'],
+                answer3: ['couleur'],
+                answer4: ['3', 'trois']
             };
 
             const result = document.getElementById('result');
@@ -236,12 +236,12 @@
             Object.keys(inputs).forEach(key => {
                 const input = inputs[key];
                 const userAnswer = normalizeAnswer(input.value);
-                const correctAnswer = normalizeAnswer(correctAnswers[key]);
+                const validAnswers = correctAnswers[key].map(ans => normalizeAnswer(ans));
 
                 // Retirer les anciennes classes
                 input.classList.remove('correct', 'incorrect');
 
-                if (userAnswer === correctAnswer) {
+                if (validAnswers.includes(userAnswer)) {
                     input.classList.add('correct');
                     correctCount++;
                 } else {

@@ -130,8 +130,8 @@
 
         .secret-word {
             font-size: 2rem;
-            color: gold;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            color: #155724;
+            font-weight: bold;
             margin-top: 1rem;
         }
 
@@ -170,9 +170,9 @@
         <div class="handwritten-letter">
             <p><strong>Énigme du jour 21</strong></p>
 
-            <p>Dans un groupe, 70% des gens portent un pull bleu, 75% un pantalon bleu, 85% un chapeau bleu et 85% un manteau bleu.</p>
+            <p>Vous vous levez très tôt et pour ne pas réveiller votre conjoint, vous prenez vos chaussettes dans le noir. Dans votre tiroir, vous avez dix chaussettes noires et dix chaussettes blanches, toutes mélangées.</p>
 
-            <p>Quel pourcentage minimum de personnes portent les quatre vêtements bleus ?</p>
+            <p>Combien de chaussettes devez-vous prendre au minimum pour être sûr d'en avoir une paire de même couleur ?</p>
 
             <div class="answer-form">
                 <p><strong>Ta réponse :</strong></p>
@@ -200,7 +200,7 @@
             const answer = normalizeAnswer(document.getElementById('answer21').value);
             const result = document.getElementById('result');
 
-            if (answer === '11' || answer === '11%') {
+            if (answer === '3' || answer === 'trois') {
                 result.className = 'result-message success';
                 result.style.display = 'block';
                 result.innerHTML = 'Bravo ! C\'est la bonne réponse !<br><div class="secret-word">SOYEUX</div>';

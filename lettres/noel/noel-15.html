@@ -223,10 +223,10 @@
             };
 
             const correctAnswers = {
-                answer1: 'feu',
-                answer2: '1089',
-                answer3: 'mirage',
-                answer4: '3'
+                answer1: ['feu', 'le feu', 'du feu'],
+                answer2: ['1089', 'mille quatre-vingt-neuf', 'mille quatre vingt neuf'],
+                answer3: ['mirage'],
+                answer4: ['3']
             };
 
             const result = document.getElementById('result');
@@ -237,12 +237,12 @@
             Object.keys(inputs).forEach(key => {
                 const input = inputs[key];
                 const userAnswer = normalizeAnswer(input.value);
-                const correctAnswer = normalizeAnswer(correctAnswers[key]);
+                const validAnswers = correctAnswers[key].map(ans => normalizeAnswer(ans));
 
                 // Retirer les anciennes classes
                 input.classList.remove('correct', 'incorrect');
 
-                if (userAnswer === correctAnswer) {
+                if (validAnswers.includes(userAnswer)) {
                     input.classList.add('correct');
                     correctCount++;
                 } else {
