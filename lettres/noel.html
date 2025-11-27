@@ -123,9 +123,32 @@
                 transform: translateY(100vh);
             }
         }
+
+        /* Note à gauche */
+        .note-conseil {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
     </style>
 </head>
 <body>
+    <div class="note-conseil">
+        Je te conseille de garder tes notes
+    </div>
+
     <div class="christmas-container">
         <h1 class="title">Calendrier de l'Avent</h1>
 
