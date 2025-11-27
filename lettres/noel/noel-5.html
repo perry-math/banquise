@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jour 5 - Noël - Lettres Antarctique</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0d3d1f, #1a5c2e, #24663a);
+            min-height: 100vh;
+        }
+
+        .day-number {
+            text-align: center;
+            color: gold;
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 2rem 0 1rem 0;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .handwritten-letter {
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            padding: 3rem;
+            padding-top: 2rem;
+            background: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(250, 248, 245, 0.95) 100%);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            line-height: 2.5rem;
+            color: #2c3e50;
+            position: relative;
+            word-spacing: 0.3rem;
+            transform: rotate(-0.5deg);
+        }
+
+        .handwritten-letter::before {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                transparent,
+                transparent calc(2.5rem - 1px),
+                rgba(100, 149, 237, 0.2) calc(2.5rem - 1px),
+                rgba(100, 149, 237, 0.2) 2.5rem
+            );
+            pointer-events: none;
+        }
+
+        .handwritten-letter p {
+            margin: 0;
+            text-indent: 2rem;
+            position: relative;
+        }
+
+        .handwritten-letter p:first-child {
+            margin-top: 0;
+        }
+
+        .handwritten-letter strong {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .answer-form {
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            border: 2px solid #4a90a4;
+            border-radius: 5px;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .answer-input.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .submit-btn {
+            background: gold;
+            border: none;
+            padding: 1rem 2rem;
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .result-message {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        .result-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+
+        .result-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+
+        .secret-word {
+            font-size: 2rem;
+            color: #155724;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 3rem;
+            font-size: 1.6rem;
+            font-style: italic;
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1.5rem;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        .retour_bouton {
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="day-number">Jour 5 - Checkpoint</div>
+
+    <div class="letter-content">
+        <div class="handwritten-letter">
+            <p><strong>Checkpoint !</strong></p>
+
+            <p>Entre les réponses des jours 1 à 4 pour découvrir le mot secret :</p>
+
+            <div class="answer-form">
+                <p><strong>Jour 1 :</strong></p>
+                <input type="text" id="answer1" class="answer-input" placeholder="Ta réponse...">
+
+                <p><strong>Jour 2 :</strong></p>
+                <input type="text" id="answer2" class="answer-input" placeholder="Ta réponse...">
+
+                <p><strong>Jour 3 :</strong></p>
+                <input type="text" id="answer3" class="answer-input" placeholder="Ta réponse...">
+
+                <p><strong>Jour 4 :</strong></p>
+                <input type="text" id="answer4" class="answer-input" placeholder="Ta réponse...">
+
+                <button class="submit-btn" onclick="checkAnswers()">Vérifier</button>
+            </div>
+
+            <div id="result" class="result-message"></div>
+
+            <div class="signature">Bonne chance ♥</div>
+        </div>
+
+        <div class="retour_bouton">
+            <a href="../noel.html">Retour au sapin</a>
+        </div>
+    </div>
+
+    <script>
+        function normalizeAnswer(answer) {
+            return answer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function checkAnswers() {
+            const inputs = {
+                answer1: document.getElementById('answer1'),
+                answer2: document.getElementById('answer2'),
+                answer3: document.getElementById('answer3'),
+                answer4: document.getElementById('answer4')
+            };
+
+            const correctAnswers = {
+                answer1: 'jeu de cartes',
+                answer2: '36',
+                answer3: 'couleur',
+                answer4: '3'
+            };
+
+            const result = document.getElementById('result');
+            let allCorrect = true;
+            let correctCount = 0;
+
+            // Vérifier chaque réponse et colorer les inputs
+            Object.keys(inputs).forEach(key => {
+                const input = inputs[key];
+                const userAnswer = normalizeAnswer(input.value);
+                const correctAnswer = normalizeAnswer(correctAnswers[key]);
+
+                // Retirer les anciennes classes
+                input.classList.remove('correct', 'incorrect');
+
+                if (userAnswer === correctAnswer) {
+                    input.classList.add('correct');
+                    correctCount++;
+                } else {
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                result.className = 'result-message success';
+                result.style.display = 'block';
+                result.innerHTML = 'Parfait ! Toutes les réponses sont correctes !<br><div class="secret-word">SILENCE</div>';
+            } else {
+                result.className = 'result-message error';
+                result.style.display = 'block';
+                result.innerHTML = `${correctCount}/4 réponses correctes. Vérifie les cases rouges !`;
+            }
+        }
+
+        // Création de flocons de neige
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 200);
+    </script>
+</body>
+</html>

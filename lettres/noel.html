@@ -5,16 +5,195 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noël - Lettres Antarctique</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0d3d1f, #1a5c2e, #24663a);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .christmas-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 700px;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title {
+            color: #fff;
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .tree-container {
+            position: relative;
+            width: 100%;
+            height: 700px;
+            background-image: url('../img/sapin.png?v=2');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Étoile au sommet */
+        .star {
+            position: absolute;
+            top: -50;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background-image: url('../img/etoile.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #8B4513;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            animation: starGlow 2s ease-in-out infinite;
+        }
+
+        .star:hover {
+            transform: translateX(-50%) scale(1.2) rotate(20deg);
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+        }
+
+        @keyframes starGlow {
+            0%, 100% {
+                filter: brightness(1) drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            }
+            50% {
+                filter: brightness(1.3) drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+            }
+        }
+
+        /* Boules de Noël */
+        .ornament {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            background-image: url('../img/boule.png');
+            background-size: cover;
+            background-position: center;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+        }
+
+        .ornament:hover {
+            transform: scale(1.3);
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.6)) brightness(1.2);
+            z-index: 10;
+        }
+
+        /* Flocons de neige */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1.5rem;
+            animation: fall linear infinite;
+            z-index: 1000;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="letter-content">
-        <h1>Noël</h1>
+    <div class="christmas-container">
+        <h1 class="title">Calendrier de l'Avent</h1>
 
-        <p>Contenu à venir...</p>
+        <div class="tree-container">
+            <!-- Étoile (jour 24) -->
+            <a href="noel/noel-24.html" class="star" title="Jour 24">24</a>
 
-        <div class="retour_bouton">
-            <a href="../boite-aux-lettres.html">Retour</a>
+            <!-- Boules numérotées (1 à 23) -->
+            <!-- Partie haute du sapin (rangée 1) -->
+            <a href="noel/noel-1.html" class="ornament" style="top: 80px; left: 50%; transform: translateX(-50%);">1</a>
+            <a href="noel/noel-2.html" class="ornament" style="top: 130px; left: 43%;">2</a>
+            <a href="noel/noel-3.html" class="ornament" style="top: 130px; left: 51%;">3</a>
+
+            <!-- Rangée 2 -->
+            <a href="noel/noel-4.html" class="ornament" style="top: 180px; left: 38%;">4</a>
+            <a href="noel/noel-5.html" class="ornament" style="top: 180px; left: 50%; transform: translateX(-50%);">5</a>
+            <a href="noel/noel-6.html" class="ornament" style="top: 180px; left: 56%;">6</a>
+
+            <!-- Rangée 3 -->
+            <a href="noel/noel-7.html" class="ornament" style="top: 230px; left: 33%;">7</a>
+            <a href="noel/noel-8.html" class="ornament" style="top: 235px; left: 42%;">8</a>
+            <a href="noel/noel-9.html" class="ornament" style="top: 235px; left: 52%;">9</a>
+            <a href="noel/noel-10.html" class="ornament" style="top: 230px; left: 61%;">10</a>
+
+            <!-- Partie moyenne (rangée 4) -->
+            <a href="noel/noel-11.html" class="ornament" style="top: 410px; left: 40%;">11</a>
+            <a href="noel/noel-12.html" class="ornament" style="top: 300px; left: 38%;">12</a>
+            <a href="noel/noel-13.html" class="ornament" style="top: 280px; left: 50%; transform: translateX(-50%);">13</a>
+            <a href="noel/noel-14.html" class="ornament" style="top: 300px; left: 55.5%;">14</a>
+            <a href="noel/noel-15.html" class="ornament" style="top: 410px; left: 53%;">15</a>
+
+            <!-- Rangée 5 -->
+            <a href="noel/noel-16.html" class="ornament" style="top: 450px; left: 35%;">16</a>
+            <a href="noel/noel-17.html" class="ornament" style="top: 365px; left: 33%;">17</a>
+            <a href="noel/noel-18.html" class="ornament" style="top: 350px; left: 42%;">18</a>
+            <a href="noel/noel-19.html" class="ornament" style="top: 350px; left: 51%;">19</a>
+            <a href="noel/noel-20.html" class="ornament" style="top: 365px; left: 61%;">20</a>
+            <a href="noel/noel-21.html" class="ornament" style="top: 450px; left: 60%;">21</a>
+
+            <!-- Partie basse (rangée 6) -->
+            <a href="noel/noel-22.html" class="ornament" style="top: 430px; left: 28%;">22</a>
+            <a href="noel/noel-23.html" class="ornament" style="top: 430px; left: 67%;">23</a>
         </div>
     </div>
+
+    <div class="retour_bouton">
+        <a href="../boite-aux-lettres.html">Retour</a>
+    </div>
+
+    <script>
+        // Création de flocons de neige
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        // Créer des flocons régulièrement
+        setInterval(createSnowflake, 200);
+    </script>
 </body>
 </html>

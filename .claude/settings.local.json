@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(do sed -i 's|background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);|background: linear-gradient(to bottom, #0d3d1f, #1a5c2e, #24663a);|g' \"$file\")",
+      "Bash(do sed -i 's|href=\"\"noel.html\"\"|href=\"\"../noel.html\"\"|g' \"$file\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
